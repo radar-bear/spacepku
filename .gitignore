@@ -1,0 +1,6 @@
+# Byte-compiled
+__pycache__/
+*.ipynb
+data/
+rbsp_demo/
+mms_demo/
