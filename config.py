@@ -29,6 +29,6 @@ DEFAULT_COLORBAR = {
     'len':DEFAULT_HEIGHT-2*DEFAULT_MARGIN,
     'titleside':'right'
 }
-MAGEIS_PATH = '/data/ECT/rbsp-ect.lanl.gov/data_pub/rbspa/mageis/level3/pitchangle/'
+RBSP_PATH = '/data/ECT/rbsp-ect.lanl.gov/data_pub/rbspa/'
 
 
