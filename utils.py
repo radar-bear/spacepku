@@ -82,7 +82,7 @@ def parse_mageis_dir(date, parrent_dir=RBSP_PATH):
     if os.path.exists(file_dir):
         all_file_list = os.listdir(file_dir)
     else:
-	return None
+        return None
     valid_file_name = None
     for temp_file_name in all_file_list:
         if re.match(file_name+'*', temp_file_name):
@@ -105,7 +105,7 @@ def parse_rept_dir(date, parrent_dir=RBSP_PATH):
     if os.path.exists(file_dir):
         all_file_list = os.listdir(file_dir)
     else:
-        return None	
+        return None
     valid_file_name = None
     for temp_file_name in all_file_list:
         if re.match(file_name+'*', temp_file_name):
