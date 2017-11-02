@@ -73,7 +73,6 @@ def convert_raw_datetime(df, raw_keylist=['Y','M','D','h','m','s'], reindex=True
 def parse_mageis_dir(date, parrent_dir=RBSP_PATH):
     mageis_dir_suffix = 'mageis/level3/pitchangle'
     mageis_prefix = 'rbspa_rel03_ect-mageis-L3_'
-    date = '2016-09-09'
     date = pd.to_datetime(date)
     time_dir = date.strftime('%Y')
     time_file_name = date.strftime('%Y%m%d')
@@ -96,7 +95,6 @@ def parse_mageis_dir(date, parrent_dir=RBSP_PATH):
 def parse_rept_dir(date, parrent_dir=RBSP_PATH):
     rept_dir_suffix = 'rept/level3/pitchangle'
     rept_prefix = 'rbspa_rel03_ect-rept-sci-L3_'
-    date = '2016-09-09'
     date = pd.to_datetime(date)
     time_dir = date.strftime('%Y')
     time_file_name = date.strftime('%Y%m%d')
