@@ -3,8 +3,8 @@ import numpy as np
 import os
 from spacepy.pycdf import CDF
 import plotly.offline as offline
-from spacepku import plot
-
+from .plot import *
+from .config import *
 def rbsp_overview(rept_file_path, mageis_file_path, date, save_path):
     rept_data = CDF(rept_file_path)
     mageis_data = CDF(mageis_file_path)
@@ -16,17 +16,17 @@ def rbsp_overview(rept_file_path, mageis_file_path, date, save_path):
                        'B_Eq':np.array(mageis_data['B_Eq']), 'time':time})
     df.where(df>-1e30, np.nan, inplace=True)
     layout_params = {'yaxis':{'title':'L'}}
-    fig_list.append(plot.tplot_line(df['time'], [df['L']],
+    fig_list.append(tplot_line(df['time'], [df['L']],
                            value_name_list=['L'],
                            layout_params=layout_params,
                            showfig=False))
     layout_params = {'yaxis':{'title':'MLT'}}
-    fig_list.append(plot.tplot_line(df['time'], [df['MLT']],
+    fig_list.append(tplot_line(df['time'], [df['MLT']],
                            value_name_list=['MLT'],
                            layout_params=layout_params,
                            showfig=False))
     layout_params = {'yaxis':{'title':'B (nT)'}}
-    fig_list.append(plot.tplot_line(df['time'], [df['B_Calc'], df['B_Eq']],
+    fig_list.append(tplot_line(df['time'], [df['B_Calc'], df['B_Eq']],
                                     value_name_list=['B_Calc','B_Eq'],
                                     layout_params=layout_params,
                                     showfig=False))
@@ -39,7 +39,7 @@ def rbsp_overview(rept_file_path, mageis_file_path, date, save_path):
         value_selected = value[:,:,energy_index]
         layout_params = {'yaxis':{'title':'MAGEIS FEDU <br> {}'.format(energy_list[energy_index]),
                                   'range':[0,180]}}
-        fig_list.append(plot.tplot_particle(time, pa, value_selected.T,
+        fig_list.append(tplot_particle(time, pa, value_selected.T,
                                             layout_params=layout_params, showfig=False))
     # handel rept figs
     time = np.array(rept_data['Epoch'])
@@ -50,10 +50,10 @@ def rbsp_overview(rept_file_path, mageis_file_path, date, save_path):
         value_selected = value[:,:,energy_index]
         layout_params = {'yaxis':{'title':'ECT FEDU <br> {}'.format(energy_list[energy_index]),
                                   'range':[0,180]}}
-        fig_list.append(plot.tplot_particle(time, pa, value_selected.T,
+        fig_list.append(tplot_particle(time, pa, value_selected.T,
                                             layout_params=layout_params,showfig=False))
     # stack all
-    stack = plot.stack_figs(fig_list.copy(),showfig=False)
+    stack = stack_figs(fig_list.copy(),showfig=False)
     stack['layout']['title']='RBAP-A overview {}'.format(date)
     stack['layout']['height'] = stack['layout']['height']*0.5
     save_file_path = os.path.join(save_path, 'rbspa_overview_{}.html'.format(date))
