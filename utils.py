@@ -84,7 +84,7 @@ def parse_mageis_dir(date, parrent_dir=RBSP_PATH):
         return None
     valid_file_name = None
     for temp_file_name in all_file_list:
-        if re.match(file_name+'*', temp_file_name):
+        if re.match('^'+file_name+'.', temp_file_name):
             valid_file_name = temp_file_name
             break
     if valid_file_name:
@@ -106,10 +106,32 @@ def parse_rept_dir(date, parrent_dir=RBSP_PATH):
         return None
     valid_file_name = None
     for temp_file_name in all_file_list:
-        if re.match(file_name+'*', temp_file_name):
+        if re.match('^'+file_name+'.', temp_file_name):
             valid_file_name = temp_file_name
             break
     if valid_file_name:
         return os.path.join(file_dir, valid_file_name)
     else:
         return None
+    
+def parse_rbsp_B_component_dir(date, parrent_dir=RBSP_B_COMPONENT_PATH):
+    B_component_prefix = 'rbsp-a_magnetometer_4sec-sm_emfisis-L3_'
+    date = pd.to_datetime(date)
+    time_dir = date.strftime('%Y/%m/%d')
+    file_dir = os.path.join(parrent_dir, time_dir)
+    time_file_name = date.strftime('%Y%m%d')
+    file_name = B_component_prefix + time_file_name
+    if os.path.exists(file_dir):
+        all_file_list = os.listdir(file_dir)
+    else:
+        return None
+    valid_file_name = None
+    for temp_file_name in all_file_list:
+        if re.match('^'+file_name+'.', temp_file_name):
+            valid_file_name = temp_file_name
+            break
+    if valid_file_name:
+        return os.path.join(file_dir, valid_file_name)
+    else:
+        return None
+    

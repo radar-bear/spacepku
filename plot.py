@@ -32,7 +32,7 @@ def tplot_line(time,
             for param, trace in zip(trace_params, trace_list):
                 trace.update(param)
     # set layout params
-    layout = DFAULT_TPLOT_LAYOUT
+    layout = get_default_layout()
     layout.update(layout_params)
     fig = go.Figure(data=trace_list, layout=layout)
     if showfig:
@@ -45,22 +45,31 @@ def tplot_particle(time,
                    colorbar_params={},
                    trace_params={},
                    layout_params={},
+                   log=True,
+                   dist_normalize=False,
                    showfig=True):
+    # dist_normalize=True会在每个时间点上，把log(PSD)normalize到[0,1]
     # TODO; warning
-    valid_value = value[np.where(value>0)]
-    # set 5% and 95% percentile of the value as colorbar min and max
-    color_min=np.log10(np.nanpercentile(valid_value, 5))
-    color_max=np.log10(np.nanpercentile(valid_value, 95))
-    trace = go.Heatmap(x=time,y=y,z=np.log10(value),colorscale='Jet',zauto=False,
+    value = np.where(value<=0, np.nan, value)
+    # normalize 注意最后把log_value改回numpy，不然不能保存json到网页
+    if log:
+        value = np.log10(value)
+    if dist_normalize:
+        value = pd.DataFrame(value)
+        value = value.apply(lambda x: (x - np.min(x)) / (np.max(x) - np.min(x)))
+        value = np.array(value)
+    color_min = np.nanpercentile(value, 5)
+    color_max = np.nanpercentile(value, 95)
+    trace = go.Heatmap(x=time,y=y,z=value,colorscale='Jet',zauto=False,
                         zmin=color_min, zmax=color_max, showscale=True)
     # set colorbar
-    colorbar = DEFAULT_COLORBAR
+    colorbar = get_default_colorbar()
     colorbar.update(colorbar_params)
     trace.update(colorbar=colorbar)
     # set trace params
     trace.update(trace_params)
     # set layout
-    layout = DFAULT_TPLOT_LAYOUT
+    layout = get_default_layout()
     layout.update(layout_params)
     fig = go.Figure(data=[trace],layout=layout)
     if showfig:
@@ -107,7 +116,7 @@ def stack_figs(fig_list, showfig=True):
             data_list.append(trace)
         # keep the yaxis parameters of each panel and set the yaxis position
         fig.layout.yaxis.update(domain=domain)
-        layout.update({'yaxis'+str(i+1):fig.layout.yaxis})
+        layout.update({'yaxis'+str(i+1):fig.layout.yaxis.copy()})
     layout.update(xaxis=fig_list[-1].layout.xaxis)
     layout.xaxis.update({'rangeslider':{'visible':False}})
     layout.update({'height':total_height, 'width':DEFAULT_WIDTH})
