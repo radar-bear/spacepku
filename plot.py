@@ -106,7 +106,7 @@ def stack_traces(fig_list, layout_params={}, showfig=True):
         iplot(fig)
     return fig
 
-def stack_figs(fig_list, showfig=True):
+def stack_figs(fig_list, layout_params, showfig=True):
     # avoid to overwrite origin figs
     from copy import deepcopy
     fig_list = deepcopy(fig_list)
@@ -152,6 +152,7 @@ def stack_figs(fig_list, showfig=True):
     layout.update(xaxis=fig_list[-1].layout.xaxis)
     layout.xaxis.update({'rangeslider':{'visible':False}})
     layout.update({'height':total_height, 'width':DEFAULT_WIDTH})
+    layout.update(layout_params)
     fig = go.Figure(data=data_list,layout=layout)
     if showfig:
         iplot(fig)

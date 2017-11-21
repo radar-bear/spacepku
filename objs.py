@@ -120,11 +120,15 @@ class tplot_heatmap_obj(tplot_obj):
                               showfig=showfig)
 
 ###########################
-# basic data obj
+# raw data obj
 
-def #TODO load其他cdfdata的画图配置文件，cdfdata的保存功能可能要修改
+def load_cdf_obj(file_name):
+    config_info = load_dict(file_name)
+    obj = cdf_obj(config_info['origin_file_name'])
+    obj.load_config(file_name)
+    return obj
 
-class cdf_data(basic_obj):
+class cdf_obj(basic_obj):
     # TODO parrent class raw_data
     # inherit tplot from patte
     def __init__(self, file_path):
@@ -154,11 +158,18 @@ class cdf_data(basic_obj):
         key = self.parse_key(key)
         return self.convert_raw_cdf_data(self._cdf[key])
     
+    def save_config(self, file_name):
+        config_info = {}
+        config_info['origin_file_name'] = self._origin_file_name
+        config_info['plot_params'] = self._plot_params
+        save_dict(config_info, file_name)
+    
     def save(self, file_name):
-        save_info = {}
-        save_info['origin_file_name'] = self._origin_file_name
-        save_info['plot_params'] = self._plot_params
-        save_dict(save_info, file_name)
+        self.save_config(file_name)
+        
+    def load_config(self, file_name):
+        config_info = load_dict(file_name)
+        self._plot_params = config_info['plot_params']
     
     @property
     def attrs(self):
