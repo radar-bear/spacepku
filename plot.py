@@ -6,7 +6,7 @@ from plotly.offline import iplot
 from .config import *
 
 def tplot_default_type_parse(value_dim):
-    
+
     if value_dim >= 3:
         raise IndexError('{} has shape {}, beyond tplot ability'.format(key, target_shape))
     elif value_dim == 2:

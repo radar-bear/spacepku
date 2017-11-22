@@ -1,0 +1,1 @@
+Search.setIndex({envversion:50,filenames:["Quick_start","index"],objects:{},objnames:{},objtypes:{},terms:{"\u641c\u7d22\u9875\u9762":1,"\u6a21\u5757\u7d22\u5f15":1,"\u7d22\u5f15":1,content:1},titles:["Quick Start","Welcome to spacepku&#8217;s documentation!"],titleterms:{document:1,indice:1,quick:0,spacepku:1,start:0,subtitl:0,tabl:1,welcom:1}})
