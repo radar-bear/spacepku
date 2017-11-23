@@ -10,6 +10,7 @@ import json
 from spacepy.pycdf import CDF
 from plotly.utils import PlotlyJSONEncoder
 import plotly.graph_objs as go
+import plotly.plotly as py
 from .config import *
 from .tools import *
 
@@ -41,14 +42,14 @@ def load_dict(file_name):
     with open(file_name, 'r') as f:
         data = f.read()
         return eval(data)
-    
+
 # load plotly fig
 def load_fig(file_name):
     """Render a plotly figure from a json file"""
     with open(file_name, 'r') as f:
         v = json.loads(f.read())
     return go.Figure(data=v['data'], layout=v['layout'])
-    
+
 # save data
 # default save pickle
 def save(data, file_name):
@@ -57,17 +58,17 @@ def save(data, file_name):
 # save pickle
 def save_pickle(data, file_name):
     pickle.dump(data, open(file_name, 'wb'))
-    
+
 # save dict as string
-def save_dict(data, file_name):  
+def save_dict(data, file_name):
     with open(file_name,'w') as f:
         f.write(str(data))
-        
+
 # save figs
 def save_fig(data, file_name):
     """
     copied from https://github.com/plotly/plotly.py/issues/579
-    
+
     Serialize a plotly figure object to JSON so it can be persisted to disk.
     Figure's persisted as JSON can be rebuilt using the plotly JSON chart API:
 
@@ -85,7 +86,13 @@ def save_fig(data, file_name):
     with open(file_name, 'w') as f:
         f.write(fig_json)
 
-        
+def save_png(data, file_name, scale=1):
+
+    if file_name.split('.')[-1] != 'png':
+        file_name += '.png'
+    py.sign_in('radar-bear', 'cKhUAYqJ2KANvRrLrXAW')
+    py.image.save_as(data, format='png', scale=scale, filename=file_name)
+
 # set figure params
 def set_params(fig, params, trace_name=None):
     params = parse_params_to_plotly(params)
@@ -105,7 +112,7 @@ def set_params(fig, params, trace_name=None):
                 if data.colorbar:
                     data.colorbar.update(params['colorbar_params'])
 
-    
+
 # convert raw datetime in txt file to datetime format
 # the raw datetime in txt should have column name ['Y','M','D','h','m','s']
 def convert_raw_datetime(df, raw_keylist=['Y','M','D','h','m','s'], reindex=True):
@@ -164,7 +171,7 @@ def parse_rept_dir(date, parrent_dir=RBSP_PATH):
         return os.path.join(file_dir, valid_file_name)
     else:
         return None
-    
+
 def parse_rbsp_B_component_dir(date, parrent_dir=RBSP_B_COMPONENT_PATH):
     B_component_prefix = 'rbsp-a_magnetometer_4sec-sm_emfisis-L3_'
     date = pd.to_datetime(date)
@@ -185,4 +192,3 @@ def parse_rbsp_B_component_dir(date, parrent_dir=RBSP_B_COMPONENT_PATH):
         return os.path.join(file_dir, valid_file_name)
     else:
         return None
-    

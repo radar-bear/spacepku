@@ -12,6 +12,9 @@ Contents:
    :maxdepth: 2
 
    Quick_start
+   Load_data
+   Fast_plot
+   Params
 
 
 Indices and tables

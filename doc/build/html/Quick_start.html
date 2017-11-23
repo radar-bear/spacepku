@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Quick Start &mdash; spacepku 0.1 文档</title>
+  <title>快速入门 &mdash; spacepku 0.1 文档</title>
   
 
   
@@ -33,6 +33,7 @@
 
   
     <link rel="top" title="spacepku 0.1 文档" href="index.html"/>
+        <link rel="next" title="读取数据" href="Load_data.html"/>
         <link rel="prev" title="Welcome to spacepku’s documentation!" href="index.html"/> 
 
   
@@ -87,10 +88,16 @@
             
             
               <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#subtitle">subtitle</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">快速入门</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">画出磁场的变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">画出某能量电子的投掷角分布变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">将多张图叠在一起</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">图片的保存与读取</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Load_data.html">读取数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Fast_plot.html">便捷画图</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Params.html">参数设置</a></li>
 </ul>
 
             
@@ -135,7 +142,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Quick Start</li>
+      <li>快速入门</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -154,10 +161,95 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="quick-start">
-<span id="quick-start"></span><h1>Quick Start<a class="headerlink" href="#quick-start" title="永久链接至标题">¶</a></h1>
-<div class="section" id="subtitle">
-<span id="subtitle"></span><h2>subtitle<a class="headerlink" href="#subtitle" title="永久链接至标题">¶</a></h2>
+  <div class="section" id="id1">
+<h1>快速入门<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>笨笨是一名空间物理专业的研究生，他很认真，但是很笨。最近导师给了他一些画图任务，本以为要过一个星期才能得到结果，没想到十分钟笨笨就画好了！Σ( ° △ °|||)︴
+我们来看看笨笨是如何实现的吧！</p>
+<div class="section" id="id2">
+<h2>画出磁场的变化<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>导师给了笨笨一个cdf文件，要求他把里面的磁场数据读出并画出线图。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">spacepku</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">Data</span> <span class="o">=</span> <span class="n">cdf_obj</span><span class="p">(</span><span class="s1">&#39;mentor_data.cdf&#39;</span><span class="p">)</span>
+<span class="n">fig_B</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">tplot</span><span class="p">(</span><span class="s1">&#39;B_Calc&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<img alt="_images/quick_start_fig1.png" src="_images/quick_start_fig1.png" />
+</div>
+<p>只需要三行就把图画完了诶，Amazing！我们仔细看看这三行都做了什么吧！</p>
+<p>第一步将spacepku导入</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">spacepku</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>第二步读取导师给笨笨的cdf文件</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Data</span> <span class="o">=</span> <span class="n">cdf_obj</span><span class="p">(</span><span class="s1">&#39;mentor_data.cdf&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>第三步指定画出Data中名字为B_Calc的变量，这里tplot的含义是 <em>time series plot</em>
+（fig_B是这张图的句柄）</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">fig_B</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">tplot</span><span class="p">(</span><span class="s1">&#39;B_Calc&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>画出某能量电子的投掷角分布变化<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>继续向前，笨笨要画张横轴是时间，纵轴是电子投掷角，用颜色表示电子通量的Heatmap。</p>
+<p>首先我们看看Data里面都有什么，直接将刚刚得到的变量Data打印出来</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">Data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>cdf data object generated from:</p>
+<p>/data/mentor_data.cdf</p>
+<p>0 Epoch (7825,)</p>
+<p>1 FEDU_Alpha (11,)</p>
+<p>2 FEDU_Energy (7825, 25)</p>
+<p>3 FEDU (7825, 11, 25)</p>
+<p>4 L (7825,)</p>
+<p>5 B_Calc (7825,)</p>
+<p>6 MLT (7825,)</p>
+<p>7 Position (7825, 3)</p>
+<p>笨笨只需要做两件事</p>
+<ol class="arabic simple">
+<li>取出时间，投掷角和FEDU</li>
+<li>生成一个tplot_heatmap_obj并使用.tplot画出</li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">time</span> <span class="o">=</span> <span class="n">Data</span><span class="p">[</span><span class="s1">&#39;Epoch&#39;</span><span class="p">]</span>
+<span class="n">pa</span> <span class="o">=</span> <span class="n">Data</span><span class="p">[</span><span class="s1">&#39;FEDU_Alpha&#39;</span><span class="p">]</span>
+<span class="n">fedu</span> <span class="o">=</span> <span class="n">Data</span><span class="p">[</span><span class="s1">&#39;FEDU&#39;</span><span class="p">][:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="c1">#取出第1个能段的FEDU</span>
+<span class="n">fig_fedu</span> <span class="o">=</span> <span class="n">tplot_heatmap_obj</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">pa</span><span class="p">,</span> <span class="n">fedu</span><span class="p">)</span><span class="o">.</span><span class="n">tplot</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<img alt="_images/quick_start_fig2.png" src="_images/quick_start_fig2.png" />
+</div>
+<p>是不是非常便捷！这两种图已经可以覆盖笨笨的大部分科研任务了，只花了不到五分钟诶</p>
+</div>
+<div class="section" id="id4">
+<h2>将多张图叠在一起<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>最后导师需要把刚才的两张图作为两个panel堆叠起来，这一任务只需要一行命令</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">fig_final</span> <span class="o">=</span> <span class="n">stack_figs</span><span class="p">([</span><span class="n">fig_fedu</span><span class="p">,</span> <span class="n">fig_B</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<img alt="_images/quick_start_fig3.png" src="_images/quick_start_fig3.png" />
+</div>
+<p>这两个panel共享同一个x轴</p>
+</div>
+<div class="section" id="id5">
+<h2>图片的保存与读取<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>笨笨圆满完成了任务，他开心地把图片保存成png发给导师。执行了下面这条命令后，同目录下便得到了fig_final.png</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">save_png</span><span class="p">(</span><span class="n">fig_final</span><span class="p">,</span> <span class="s1">&#39;fig_final&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>为了方便以后改图，笨笨又把这张图的源数据保存了下来</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">save_fig</span><span class="p">(</span><span class="n">fig_final</span><span class="p">,</span> <span class="s1">&#39;fig_final.fig&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>读取图片源数据，并使用show函数显示它</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">fig_reload</span> <span class="o">=</span> <span class="n">load_fig</span><span class="p">(</span><span class="s1">&#39;fig_final.fig&#39;</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="n">fig_reload</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -170,6 +262,8 @@
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Load_data.html" class="btn btn-neutral float-right" title="读取数据" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="Welcome to spacepku’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

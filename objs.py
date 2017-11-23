@@ -16,13 +16,13 @@ from .tools import *
 # basic obj
 
 class basic_obj():
-    
+
     def __init__(self):
         pass
-    
+
     def save(self, file_name):
         save(self, file_name)
-        
+
 ###########################
 # plot obj
 
@@ -35,46 +35,46 @@ class tplot_obj(basic_obj):
         self._value = deepcopy(value)
         self._y = copy(y)
         self._params = deepcopy(params)
-    
+
     def __len__(self):
         return len(self._time)
-    
+
     def set_time(self, time):
         from copy import copy
         self._time = copy(time)
-        
+
     def set_y(self, y):
         from copy import copy
         self._y = copy(y)
-    
+
     def set_value(self, value):
         from copy import deepcopy
         self._value = deepcopy(value)
-        
+
     def set_param(self, params):
         from copy import deepcopy
         self._params.update(params)
-    
+
     @property
     def time(self):
         from copy import copy
         return copy(self._time)
-    
+
     @property
     def y(self):
         from copy import copy
         return copy(self._y)
-    
+
     @property
     def value(self):
         from copy import deepcopy
         return deepcopy(self._value)
-    
+
     @property
     def params(self):
         from copy import deepcopy
         return deepcopy(self._params)
-    
+
 class tplot_line_obj(tplot_obj):
 
     def __init__(self, time, value, params={}):
@@ -83,17 +83,17 @@ class tplot_line_obj(tplot_obj):
         assert time_shape == value_shape
         assert len(time_shape) == 1
         super(tplot_line_obj, self).__init__(time=time, y=None, value=value, params=params)
-    
+
     def tplot(self, showfig=True):
         plotly_params = parse_params_to_plotly(self._params)
-        return tplot_line(self._time, 
+        return tplot_line(self._time,
                           [self._value],
                           trace_params=plotly_params['trace_params'],
                           layout_params=plotly_params['layout_params'],
                           showfig=showfig)
-    
+
 class tplot_heatmap_obj(tplot_obj):
-    
+
     def __init__(self, time, y, value, params={}):
         # 这里我们假设value的形状是[time, y]，这种假设更符合cdf文件的原始形式
         # 在画图的时候要记得转置
@@ -106,7 +106,7 @@ class tplot_heatmap_obj(tplot_obj):
         assert value_shape[0] == time_shape[0]
         assert value_shape[1] == y_shape[0]
         super(tplot_heatmap_obj, self).__init__(time=time, y=y, value=value, params=params)
-    
+
     def tplot(self, log=False, dist_normalize=False, showfig=True):
         plotly_params = parse_params_to_plotly(self._params)
         return tplot_particle(self._time,
@@ -146,52 +146,52 @@ class cdf_obj(basic_obj):
             self._default_time = self.convert_raw_cdf_data(self._cdf['Epoch'])
         else:
             self._default_time = []
-        
+
     def __str__(self):
-        base_info = "tplot object generated from: \n {}\n".format(self._origin_file_name)
+        base_info = "cdf data object generated from: \n {}\n".format(self._origin_file_name)
         for i in range(len(self._keys)):
             base_info += "{} {} {}\n".format(i, self._keys[i], self._shapes[i])
         return base_info
     __repr__ = __str__
-        
+
     def __getitem__(self, key):
         key = self.parse_key(key)
         return self.convert_raw_cdf_data(self._cdf[key])
-    
+
     def save_config(self, file_name):
         config_info = {}
         config_info['origin_file_name'] = self._origin_file_name
         config_info['plot_params'] = self._plot_params
         save_dict(config_info, file_name)
-    
+
     def save(self, file_name):
         self.save_config(file_name)
-        
+
     def load_config(self, file_name):
         config_info = load_dict(file_name)
         self._plot_params = config_info['plot_params']
-    
+
     @property
     def attrs(self):
         from copy import deepcopy
         return deepcopy(self._attrs)
-    
+
     def parse_key(self, key):
         if isinstance(key, int):
             key = self._keys[key]
         return key
-    
+
     def set_param(self, key, params):
         key = self.parse_key(key)
         self._plot_params[key].update(params)
-        
+
     def convert_raw_cdf_data(self, raw_cdf_data, fillval_key='FILLVAL'):
         data = raw_cdf_data[:]
         if fillval_key in raw_cdf_data.attrs:
             fillval = raw_cdf_data.attrs[fillval_key]
             data[data==fillval] = np.nan
         return data
-    
+
     def tplot(self, key, y=[], time=[], params={}, type='Default', clog=False, showfig=True):
 
         key = self.parse_key(key)
@@ -201,14 +201,14 @@ class cdf_obj(basic_obj):
             raise ValueError('time data missed when plot {}'.format(key))
         value = self.convert_raw_cdf_data(self._cdf[key])
         value_dim = len(value.shape)
-        
+
         # 如果画图类型是Default则自动判断类型
         if type == 'Default':
             type = tplot_default_type_parse(value_dim)
-                
+
         if params:
             self._plot_params[key].update(params)
-            
+
         if type == 'line':
             # 指定类型为line后如果是1维数据画普通线图
             # 如果是2为数据画多线图
@@ -217,11 +217,11 @@ class cdf_obj(basic_obj):
                 return obj.tplot(showfig=showfig)
             if value_dim == 2:
                 line_num = value.shape[1]
-                obj_list = [tplot_line_obj(time, value[:,i], params=self._plot_params[key]) 
+                obj_list = [tplot_line_obj(time, value[:,i], params=self._plot_params[key])
                             for i in range(line_num)]
                 fig_list = [obj.tplot(showfig=False) for obj in obj_list]
                 return stack_traces(fig_list, showfig=showfig)
-        
+
         if type == 'heatmap':
             if len(y) == 0:
                 raise ValueError('y data missed when plot {}'.format(key))
