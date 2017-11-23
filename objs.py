@@ -130,7 +130,7 @@ def load_cdf_obj(file_name):
 
 class cdf_obj(basic_obj):
     # TODO parrent class raw_data
-    # inherit tplot from patte
+    # inherit tplot from parrent
     def __init__(self, file_path):
         if file_path.split('.')[-1] != 'cdf':
             raise ValueError('{} is not a cdf file'.format(cdf_file_path))

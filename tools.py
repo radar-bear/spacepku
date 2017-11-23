@@ -19,6 +19,10 @@ def parse_params_to_plotly(params):
     for key in xaxis_keys:
         if key in params:
             layout_params['xaxis'][key[1:]] = params[key]
+    if 'range' in layout_params['yaxis']:
+        layout_params['yaxis']['autorange'] = False
+    if 'range' in layout_params['xaxis']:
+        layout_params['xaxis']['autorange'] = False
 
     trace_params = {}
     for key in trace_keys:

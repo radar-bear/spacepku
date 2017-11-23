@@ -2,19 +2,21 @@ import pandas as pd
 import numpy as np
 import os
 import copy
-from spacepy import *
+from spacepku import *
+from plotly import offline
 
 def rbsp_overview(date,
                   save_path,
                   log=False,
-                  dist_normalize=False):
+                  dist_normalize=False,
+                  save_source=True):
     '''
     dist_normalize=True会在每个时间点上，把PSDnormalize到[0,1]
     '''
     # load data
     rept = cdf_obj(parse_rept_dir(date))
-    mageis = cdf_obj(parse_rept_dir(date))
-    rbsp_b_component = cdf_obj(parse_rept_dir(date))
+    mageis = cdf_obj(parse_mageis_dir(date))
+    rbsp_b_component = cdf_obj(parse_rbsp_B_component_dir(date))
 
     # init fig list
     fig_list = []
@@ -23,16 +25,17 @@ def rbsp_overview(date,
     fig_L = tplot_line_obj(mageis['Epoch'], mageis['L'], {'ytitle':'L', 'name':'L'}).tplot(showfig=False)
     MLT = mageis['MLT']
     MLAT = mageis['MLAT']
-    position_info = ['MLT:{:.3f}<br>MLAT:{:.3f}'.format(i,j) for i,j in zip('MLT', 'MLAT')]
+    position_info = ['MLT:{:.3f}<br>MLAT:{:.3f}'.format(i,j) for i,j in zip(MLT, MLAT)]
     fig_L['data'][0].update({'text':position_info})
     fig_list.append(fig_L)
 
     # handle B component
-    fig_B = rbsp_b_component.tplot('Mag', type='line')
+    fig_B = rbsp_b_component.tplot('Mag', type='line', showfig=False)
     set_params(fig_B, {'ytitle':'B (nT)', 'yrange':[-500, 500]})
     set_params(fig_B, {'name':'Bx'}, trace_name=0)
     set_params(fig_B, {'name':'By'}, trace_name=1)
     set_params(fig_B, {'name':'Bz'}, trace_name=2)
+    fig_list.append(fig_B)
 
     # handle mageis figs
     time = mageis['Epoch']
@@ -71,14 +74,26 @@ def rbsp_overview(date,
     stack_fig = stack_figs(fig_list, {'title':stack_fig_title, 'showlegend':False}, showfig=False)
     stack_fig['layout']['height'] = stack_fig['layout']['height']*0.5
 
-    # save
+    # save fig
+    if not os.path.exists(save_path):
+        os.mkdir(save_path)
+        
     if dist_normalize:
-        save_file_path = os.path.join(save_path, 'rbspa_overview_{}_normalized.html'.format(date))
+        file_name = 'rbspa_overview_{}_normalized'.format(date)
     else:
-        save_file_path = os.path.join(save_path, 'rbspa_overview_{}.html'.format(date))
-    offline.plot(stack, filename=save_file_path)
+        file_name = 'rbspa_overview_{}'.format(date)
+    
+    save_file_path = os.path.join(save_path, file_name+'.html')
+    offline.plot(stack_fig, filename=save_file_path)
+    
+    # save source
+    if save_source:
+        save_source_path = os.path.join(save_path, 'source')
+        if not os.path.exists(save_source_path):
+            os.mkdir(save_source_path)
+    save_fig(stack_fig, os.path.join(save_source_path, file_name+'.source'))
 
-    return fig_list, stack
+    return stack_fig
 
 # for test
 if __name__ == '__main__':
