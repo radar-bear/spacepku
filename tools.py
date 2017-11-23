@@ -2,7 +2,7 @@
 layout_keys = ['title', 'showlegend', 'width', 'height']
 yaxis_keys = ['ytitle', 'yrange', 'ytype', 'yticktext', 'ytickvals']
 xaxis_keys = ['xtitle', 'xrange', 'xtype', 'xticktext', 'xtickvals']
-trace_keys = ['name']
+trace_keys = ['name', 'text']
 line_keys = ['color', 'width', 'dash']
 colorbar_keys = ['ctitle', 'cticktext', 'ctickvals']
 colorbar_range = 'crange'
