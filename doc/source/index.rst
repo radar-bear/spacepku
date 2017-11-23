@@ -6,9 +6,9 @@
 Welcome to spacepku's documentation!
 ====================================
 
-spacepku是一款用于空间物理研究领域的python开源库
+Contents: spacepku是一款用于空间物理研究领域的python开源库
 
-.. doctree::
+.. toctree::
    :maxdepth: 2
 
    Quick_start
