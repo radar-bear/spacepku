@@ -139,6 +139,7 @@ class cdf_obj(basic_obj):
         self._keys = list(self._cdf.keys())
         self._shapes = [self._cdf[key].shape for key in self._keys]
         self._attrs = {key:dict(self._cdf[key].attrs) for key in self._keys}
+        self._attrs.update({i:self._attrs[self._keys[i]] for i in range(len(self._keys))})
         self._plot_params = {}
         for key in self._keys:
             self._plot_params[key] = {}
