@@ -32,7 +32,9 @@
   
 
   
-    <link rel="top" title="spacepku 0.1 文档" href="index.html"/> 
+    <link rel="top" title="spacepku 0.1 文档" href="index.html"/>
+        <link rel="next" title="绘图" href="Plot.html"/>
+        <link rel="prev" title="快速入门" href="Quick_start.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -85,17 +87,23 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">读取数据</a><ul>
-<li><a class="reference internal" href="#cdf">读取cdf数据</a><ul>
-<li><a class="reference internal" href="#id2">取出变量</a></li>
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Quick_start.html">快速入门</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">读取数据</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#cdf">读取cdf数据</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">获取变量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">获取变量的属性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">便捷画图</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">保留画图参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">存储与读取</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Plot.html">绘图</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Params.html">参数设置</a></li>
 </ul>
-</div>
+
             
           
         </div>
@@ -176,17 +184,74 @@
 <p>1 FEDU_Alpha (11,)</p>
 <p>2 FEDU_Energy (7825, 25)</p>
 <p>3 FEDU (7825, 11, 25)</p>
-<p>4 L (7825,)</p>
-<p>5 B_Calc (7825,)</p>
-<p>6 MLT (7825,)</p>
-<p>7 Position (7825, 3)</p>
+<p>4 FESA (7825, 25)</p>
+<p>5 L (7825,)</p>
+<p>6 B_Calc (7825,)</p>
+<p>7 MLT (7825,)</p>
+<p>8 Position (7825, 3)</p>
 </div></blockquote>
 <p>输出中包括两部分内容，第一行显示了这个cdf_obj对象读取自哪个文件。接下来的若干行显示了这个cdf_obj对象包含的变量。</p>
 <div class="section" id="id2">
-<h3>取出变量<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<h3>获取变量<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
 <p>取出变量有两种索引方式，键值或序号。以取出时间变量为例：</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Data</span><span class="p">[</span><span class="s1">&#39;Epoch&#39;</span><span class="p">]</span>
 <span class="n">Data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>返回值为np.array对象</p>
+</div>
+<div class="section" id="id3">
+<h3>获取变量的属性<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>取出变量的属性同样有两种索引方式，键值或序号。以取出时间变量的属性为例：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Data</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;Epoch&#39;</span><span class="p">]</span>
+<span class="n">Data</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>返回值为字典</p>
+</div>
+<div class="section" id="id4">
+<h3>便捷画图<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>cdf_obj的tplot方法可以绘制某变量的时间序列，同样有键值和序号两种索引方式。</p>
+<p>对于一维变量绘制线图：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Data</span><span class="o">.</span><span class="n">tplot</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">Data</span><span class="o">.</span><span class="n">tplot</span><span class="p">(</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>对于二维变量可选线图或谱图：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># 指定画线图，第二个维度被视作不同的线</span>
+<span class="n">Data</span><span class="o">.</span><span class="n">tplot</span><span class="p">(</span><span class="s1">&#39;Position&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+<span class="c1"># 指定画谱图，同时必须指定y轴数据</span>
+<span class="n">Data</span><span class="o">.</span><span class="n">tplot</span><span class="p">(</span><span class="s1">&#39;FESA&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">Data</span><span class="p">[</span><span class="s1">&#39;FEDU_Energy&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">,:],</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;heatmap&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>三维及以上变量暂不支持便捷画图</p>
+<p>其余参数：</p>
+<blockquote>
+<div><ul class="simple">
+<li>params: 字典。设置画图参数。参数列表见参数设置。</li>
+<li>clog: 布尔值。画谱图时是否对变量取对数。</li>
+<li>showfig: 布尔值。是否显示图片。</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id5">
+<h3>保留画图参数<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>cdf_obj内部保存着绘制每个变量所使用的画图参数字典，便捷画图会默认使用cdf_obj内部保存的画图参数字典。有两种方式可以修改这一字典：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Data</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="n">var_name</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="n">Data</span><span class="o">.</span><span class="n">tplot</span><span class="p">(</span><span class="n">var_name</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>上面两种方法均可使用params更新var_name变量的画图参数字典。更新的意义是，原字典包含，但params中没有的键值对不会被更新。例如原字典为 {&#8216;title&#8217;:&#8217;Bx&#8217;, &#8216;name&#8217;:&#8217;temp&#8217;}，params为{&#8216;name&#8217;:&#8217;Bx&#8217;}，更新后的字典{&#8216;title&#8217;:&#8217;Bx&#8217;, &#8216;name&#8217;:&#8217;Bx&#8217;}</p>
+<p>画图参数也可以被存储和读取</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Data1</span><span class="o">.</span><span class="n">save_config</span><span class="p">(</span><span class="s1">&#39;default_plot_config1&#39;</span><span class="p">)</span>
+<span class="n">Data2</span><span class="o">.</span><span class="n">load_config</span><span class="p">(</span><span class="s1">&#39;default_plot_config1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>存储与读取<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Data</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;file_name&#39;</span><span class="p">)</span>
+<span class="n">Data_loaded</span> <span class="o">=</span> <span class="n">load_cdf_obj</span><span class="p">(</span><span class="s1">&#39;file_name&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -200,6 +265,15 @@
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Plot.html" class="btn btn-neutral float-right" title="绘图" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Quick_start.html" class="btn btn-neutral" title="快速入门" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

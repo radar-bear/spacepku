@@ -13,7 +13,7 @@ Contents: spacepku是一款用于空间物理研究领域的python开源库
 
    Quick_start
    Load_data
-   Fast_plot
+   Plot
    Params
 
 

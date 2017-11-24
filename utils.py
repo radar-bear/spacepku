@@ -9,6 +9,7 @@ import json
 
 from spacepy.pycdf import CDF
 from plotly.utils import PlotlyJSONEncoder
+from plotly import offline
 import plotly.graph_objs as go
 import plotly.plotly as py
 from .config import *
@@ -92,6 +93,12 @@ def save_png(data, file_name, scale=1):
         file_name += '.png'
     py.sign_in('radar-bear', 'cKhUAYqJ2KANvRrLrXAW')
     py.image.save_as(data, format='png', scale=scale, filename=file_name)
+
+def save_html(data, file_name):
+
+    if file_name.split('.')[-1] != 'html':
+        file_name += '.html'
+    offline.plot(data, filename='file_name')
 
 # set figure params
 def set_params(fig, params, trace_name=None):
