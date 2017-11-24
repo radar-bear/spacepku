@@ -3,7 +3,7 @@ layout_keys = ['title', 'showlegend', 'width', 'height']
 yaxis_keys = ['ytitle', 'yrange', 'ytype', 'yticktext', 'ytickvals']
 xaxis_keys = ['xtitle', 'xrange', 'xtype', 'xticktext', 'xtickvals']
 trace_keys = ['name', 'text']
-line_keys = ['color', 'width', 'dash']
+line_keys = ['line_color', 'line_width', 'line_dash']
 colorbar_keys = ['ctitle', 'cticktext', 'ctickvals']
 colorbar_range = 'crange'
 
@@ -35,7 +35,7 @@ def parse_params_to_plotly(params):
     line_params = {}
     for key in line_keys:
         if key in params:
-            line_params[key] = params[key]
+            line_params[key[5:]] = params[key]
     if line_params:
         trace_params['line'] = line_params
 

@@ -27,7 +27,7 @@ tplot系列对象都可以调用 **tplot** 方法（假设我们得到了变量�
 
     show(fig)
 
-fig默认以基于网页浏览器的 `可交互模式 <https://github.com/radar-bear/spacepku/blob/master/doc/source/figs/fig_stack.html>`_  展现。我们可以把fig保存为网页，也可以保存为png格式图片
+fig默认以基于网页浏览器的 `可交互模式 <http://mag.pku-space.cn/Data/library/spacepku/doc/source/spacepku_demo.html>`_  展现。我们可以把fig保存为网页，也可以保存为png格式图片
 
 .. code-block:: python
 

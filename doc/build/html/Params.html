@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>参数设置 &mdash; spacepku 0.1 文档</title>
+  <title>绘图参数列表 &mdash; spacepku 0.1 文档</title>
   
 
   
@@ -32,7 +32,8 @@
   
 
   
-    <link rel="top" title="spacepku 0.1 文档" href="index.html"/> 
+    <link rel="top" title="spacepku 0.1 文档" href="index.html"/>
+        <link rel="prev" title="绘图" href="Plot.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -85,11 +86,38 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">参数设置</a></li>
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Quick_start.html">快速入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Load_data.html">读取数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plot.html">绘图</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">绘图参数列表</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#title"><strong>title</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#showlegend"><strong>showlegend</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#width"><strong>width</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#height"><strong>height</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ytitle"><strong>ytitle</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#yrange"><strong>yrange</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ytype"><strong>ytype</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#yticktext"><strong>yticktext</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ytickvals"><strong>ytickvals</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#xtitle"><strong>xtitle</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#xrange"><strong>xrange</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#xtype"><strong>xtype</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#xticktext"><strong>xticktext</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#xtickvals"><strong>xtickvals</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#name"><strong>name</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#text"><strong>text</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#line-color"><strong>line_color</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#line-width"><strong>line_width</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#line-dash"><strong>line_dash</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ctitle"><strong>ctitle</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cticktext"><strong>cticktext</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ctickvals"><strong>ctickvals</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#crange"><strong>crange</strong></a></li>
 </ul>
-</div>
+</li>
+</ul>
+
             
           
         </div>
@@ -132,7 +160,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>参数设置</li>
+      <li>绘图参数列表</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -152,7 +180,108 @@
            <div itemprop="articleBody">
             
   <div class="section" id="id1">
-<h1>参数设置<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<h1>绘图参数列表<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>以字典的形式传入绘图参数，例如</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">plot_params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;First Figure&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;width&#39;</span><span class="p">:</span><span class="mi">500</span><span class="p">,</span>
+               <span class="s1">&#39;height&#39;</span><span class="p">:</span><span class="mi">500</span><span class="p">,</span>
+               <span class="s1">&#39;yrange&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">]}</span>
+</pre></div>
+</div>
+<p>现支持以下参数</p>
+<div class="section" id="title">
+<h2><strong>title</strong><a class="headerlink" href="#title" title="永久链接至标题">¶</a></h2>
+<p>标题，str</p>
+</div>
+<div class="section" id="showlegend">
+<h2><strong>showlegend</strong><a class="headerlink" href="#showlegend" title="永久链接至标题">¶</a></h2>
+<p>是否显示图例，bool</p>
+</div>
+<div class="section" id="width">
+<h2><strong>width</strong><a class="headerlink" href="#width" title="永久链接至标题">¶</a></h2>
+<p>宽度，int</p>
+</div>
+<div class="section" id="height">
+<h2><strong>height</strong><a class="headerlink" href="#height" title="永久链接至标题">¶</a></h2>
+<p>高度，int</p>
+</div>
+<div class="section" id="ytitle">
+<h2><strong>ytitle</strong><a class="headerlink" href="#ytitle" title="永久链接至标题">¶</a></h2>
+<p>纵轴标题，str</p>
+</div>
+<div class="section" id="yrange">
+<h2><strong>yrange</strong><a class="headerlink" href="#yrange" title="永久链接至标题">¶</a></h2>
+<p>纵轴范围，list</p>
+</div>
+<div class="section" id="ytype">
+<h2><strong>ytype</strong><a class="headerlink" href="#ytype" title="永久链接至标题">¶</a></h2>
+<p>纵轴类型，&#8221;linear&#8221;或&#8221;log&#8221;</p>
+</div>
+<div class="section" id="yticktext">
+<h2><strong>yticktext</strong><a class="headerlink" href="#yticktext" title="永久链接至标题">¶</a></h2>
+<p>自定义y轴刻度文字，list</p>
+</div>
+<div class="section" id="ytickvals">
+<h2><strong>ytickvals</strong><a class="headerlink" href="#ytickvals" title="永久链接至标题">¶</a></h2>
+<p>自定义y轴刻度的位置，list</p>
+</div>
+<div class="section" id="xtitle">
+<h2><strong>xtitle</strong><a class="headerlink" href="#xtitle" title="永久链接至标题">¶</a></h2>
+<p>横轴标题，str</p>
+</div>
+<div class="section" id="xrange">
+<h2><strong>xrange</strong><a class="headerlink" href="#xrange" title="永久链接至标题">¶</a></h2>
+<p>横轴范围，list</p>
+</div>
+<div class="section" id="xtype">
+<h2><strong>xtype</strong><a class="headerlink" href="#xtype" title="永久链接至标题">¶</a></h2>
+<p>横轴类型，&#8221;linear&#8221;或&#8221;log&#8221;</p>
+</div>
+<div class="section" id="xticktext">
+<h2><strong>xticktext</strong><a class="headerlink" href="#xticktext" title="永久链接至标题">¶</a></h2>
+<p>自定义x轴刻度文字，list</p>
+</div>
+<div class="section" id="xtickvals">
+<h2><strong>xtickvals</strong><a class="headerlink" href="#xtickvals" title="永久链接至标题">¶</a></h2>
+<p>自定义x轴刻度的位置，list</p>
+</div>
+<div class="section" id="name">
+<h2><strong>name</strong><a class="headerlink" href="#name" title="永久链接至标题">¶</a></h2>
+<p>图例名称，str</p>
+</div>
+<div class="section" id="text">
+<h2><strong>text</strong><a class="headerlink" href="#text" title="永久链接至标题">¶</a></h2>
+<p>鼠标悬停显示文字，list</p>
+</div>
+<div class="section" id="line-color">
+<h2><strong>line_color</strong><a class="headerlink" href="#line-color" title="永久链接至标题">¶</a></h2>
+<p>线颜色，str
+格式为 &#8216;rgba(34, 67, 89, 1)&#8217;</p>
+</div>
+<div class="section" id="line-width">
+<h2><strong>line_width</strong><a class="headerlink" href="#line-width" title="永久链接至标题">¶</a></h2>
+<p>线宽度，float</p>
+</div>
+<div class="section" id="line-dash">
+<h2><strong>line_dash</strong><a class="headerlink" href="#line-dash" title="永久链接至标题">¶</a></h2>
+<p>实线或虚线，&#8221;solid&#8221;或&#8221;dot&#8221;或&#8221;dash&#8221;</p>
+</div>
+<div class="section" id="ctitle">
+<h2><strong>ctitle</strong><a class="headerlink" href="#ctitle" title="永久链接至标题">¶</a></h2>
+<p>colorbar名称，str</p>
+</div>
+<div class="section" id="cticktext">
+<h2><strong>cticktext</strong><a class="headerlink" href="#cticktext" title="永久链接至标题">¶</a></h2>
+<p>自定义colorbar刻度，list</p>
+</div>
+<div class="section" id="ctickvals">
+<h2><strong>ctickvals</strong><a class="headerlink" href="#ctickvals" title="永久链接至标题">¶</a></h2>
+<p>自定义colorbar刻度的位置，list</p>
+</div>
+<div class="section" id="crange">
+<h2><strong>crange</strong><a class="headerlink" href="#crange" title="永久链接至标题">¶</a></h2>
+<p>colorbar范围，list</p>
+</div>
 </div>
 
 
@@ -162,6 +291,13 @@
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="Plot.html" class="btn btn-neutral" title="绘图" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
