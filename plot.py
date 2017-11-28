@@ -106,7 +106,7 @@ def stack_traces(fig_list, layout_params={}, showfig=True):
         iplot(fig)
     return fig
 
-def stack_figs(fig_list, layout_params, showfig=True):
+def stack_figs(fig_list, layout_params={}, showfig=True):
     # avoid to overwrite origin figs
     from copy import deepcopy
     fig_list = deepcopy(fig_list)

@@ -3,10 +3,12 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-欢迎来到spacepku的说明文档!
+欢迎使用spacepku!
 ====================================
 
 spacepku是一款用于空间物理研究领域的python开源库，致力于使空间物理研究中的数据处理变得简单有趣！
+
+珍爱生命，远离IDL，现在上车还来得及！
 
 .. toctree::
    :maxdepth: 2
