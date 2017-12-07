@@ -4,8 +4,17 @@ import numpy as np
 import pandas as pd
 import os
 
+
+##################################
+# default key config
+
+DEFAULT_TIME_KEY = ['Epoch', 'epoch', 'IsoTime', 'isotime', 'Time', 'time']
+DEFAULT_FILLVAL_KEY = ['FILLVAL']
+
+
 ##################################
 # env config
+
 def pku_mag_init(jupyter=True):
     # set os env
     import os
@@ -52,8 +61,3 @@ def get_default_colorbar():
         titleside='right'
     )
     return default_colorbar
-
-RBSP_PATH = '/data/ECT/rbsp-ect.lanl.gov/data_pub/rbspa/'
-RBSP_B_COMPONENT_PATH = '/data/EMFISIS/emfisis.physics.uiowa.edu/Flight/RBSP-A/L3'
-
-

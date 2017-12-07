@@ -23,10 +23,23 @@ def tplot_line(time,
                trace_params=[],
                layout_params={},
                showfig=True):
+    time = pd.to_datetime(pd.Series(time)) # 为了正确地显示时间需要用pd.Series
+    return plot_line(time, 
+                     value_list, 
+                     value_name_list=value_name_list, 
+                     trace_params=trace_params, 
+                     layout_params=layout_params,
+                     showfig=showfig)
+
+def plot_line(x,
+              value_list,
+              value_name_list=[],
+              trace_params=[],
+              layout_params={},
+              showfig=True):
     trace_list = []
-    time = pd.Series(time) # 为了正确地显示时间需要用pd.Series
     for value in value_list:
-        trace_list.append(go.Scatter(x=time,
+        trace_list.append(go.Scatter(x=x,
                                      y=value,
                                      line=dict(width=0.5),
                                      showlegend=True))
@@ -52,18 +65,16 @@ def tplot_line(time,
         iplot(fig)
     return fig
 
-def tplot_particle(time,
-                   y,
-                   value,
-                   colorbar_params={},
-                   trace_params={},
-                   layout_params={},
-                   log=True,
-                   dist_normalize=False,
-                   showfig=True):
+def tplot_heatmap(time,
+                  y,
+                  value,
+                  colorbar_params={},
+                  trace_params={},
+                  layout_params={},
+                  log=True,
+                  dist_normalize=False,
+                  showfig=True):
     # dist_normalize=True会在每个时间点上，把log(PSD)normalize到[0,1]
-    # TODO; warning
-    value = np.where(value<=0, np.nan, value)
     # normalize 注意最后把log_value改回numpy，不然不能保存json到网页
     if log:
         value = np.log10(value)
@@ -71,10 +82,27 @@ def tplot_particle(time,
         value = pd.DataFrame(value)
         value = value.apply(lambda x: (x - np.min(x)) / (np.max(x) - np.min(x)))
         value = np.array(value)
+    time = pd.to_datetime(pd.Series(time)) # 为了正确地显示时间需要用pd.Series
+    return plot_heatmap(time,
+                        y,
+                        value,
+                        colorbar_params=colorbar_params,
+                        trace_params=trace_params,
+                        layout_params=layout_params,
+                        showfig=showfig)
+    
+def plot_heatmap(x,
+                 y,
+                 value,
+                 colorbar_params={},
+                 trace_params={},
+                 layout_params={},
+                 showfig=True):
+    
     color_min = np.nanpercentile(value, 5)
     color_max = np.nanpercentile(value, 95)
-    time = pd.Series(time) # 为了正确地显示时间需要用pd.Series
-    trace = go.Heatmap(x=time,y=y,z=value,colorscale='Jet',zauto=False,
+    
+    trace = go.Heatmap(x=x,y=y,z=value,colorscale='Jet',zauto=False,
                         zmin=color_min, zmax=color_max, showscale=True)
     # set colorbar
     colorbar = get_default_colorbar()

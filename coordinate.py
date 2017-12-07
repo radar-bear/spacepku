@@ -1,6 +1,6 @@
 import numpy as np
 
-def field_aligned_coordinate(B, pos, window=600):
+def field_aligned_coordinate(B, pos, window=50):
     assert B.shape == pos.shape
     new_B = np.array(np.zeros(B.shape))
     for i in range(len(B)):
