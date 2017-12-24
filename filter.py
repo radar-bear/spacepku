@@ -36,25 +36,32 @@ def smooth2d(value, scale=(10,10)):
     return df
 
 
-def resample(x, y, scale=1, kind='slinear', xnew=[]):
+def resample(x, y, scale=1, kind='slinear', xnew=np.array([])):
     '''
     resample x-y series
     scale > 1 for upsample
     scale < 1 for downsample
     this function won't smooth the curve
     this function will change len(x)
+    fill nan if xnew is wider than x
     '''
+    xnew = np.array(xnew)
     if len(xnew) == 0:
         xnew = np.linspace(np.nanmin(x), np.nanmax(x), int(len(x)*scale))
+    bool_index = (xnew>np.nanmin(x)) & (xnew<np.nanmax(x))
+    ynew = np.zeros(len(xnew))
+    ynew.fill(np.nan)
     f = interp1d(x, y, kind=kind)
-    ynew = f(xnew)
+    ynew[bool_index] = f(xnew[bool_index])
     return xnew, ynew
 
 def resample2d(x, y, value, xscale=1, yscale=1, kind='slinear', xnew=[], ynew=[]):
     '''
     scale must be a two element tuple
+    TODO: 使用nan填充超出原始范围的插值
     '''
-    assert len(scale) == 2
+    xnew = np.array(xnew)
+    ynew = np.array(ynew)
     if len(xnew) == 0:
         xnew = np.linspace(np.nanmin(x), np.nanmax(x), int(len(x)*xscale))
     if len(ynew) == 0:

@@ -76,12 +76,13 @@ def tplot_heatmap(time,
                   showfig=True):
     # dist_normalize=True会在每个时间点上，把log(PSD)normalize到[0,1]
     # normalize 注意最后把log_value改回numpy，不然不能保存json到网页
+
     if log:
         value = np.log10(value)
     if dist_normalize:
         value = pd.DataFrame(value)
         value = value.apply(lambda x: (x - np.min(x)) / (np.max(x) - np.min(x)))
-        value = np.array(value)
+
     time = pd.to_datetime(pd.Series(time)) # 为了正确地显示时间需要用pd.Series
     return plot_heatmap(time,
                         y,
@@ -98,6 +99,10 @@ def plot_heatmap(x,
                  trace_params={},
                  layout_params={},
                  showfig=True):
+    # the 1st axis of value is x
+    # the 2nd axis of value is y
+    
+    value = np.array(value).T
     
     color_min = np.nanpercentile(value, 5)
     color_max = np.nanpercentile(value, 95)

@@ -115,7 +115,7 @@ class tplot_heatmap_obj(tplot_obj):
         plotly_params = parse_params_to_plotly(self._params)
         return tplot_heatmap(self._time,
                              self._y,
-                             self._value.T, # 转置value
+                             np.array(self._value), # 转置value
                              trace_params=plotly_params['trace_params'],
                              layout_params=plotly_params['layout_params'],
                              colorbar_params=plotly_params['colorbar_params'],
@@ -269,13 +269,17 @@ class cdf_obj(basic_data_obj):
         
 class data_obj(basic_data_obj):
 
-    def __init__(self, data_source, select_keys=[]):
+    def __init__(self, data_source, data_keys=[], label_keys=[], concat_axis=0):
         '''
         data_source: 
         1. file name
         2. list of file name
         3. dict-like origin data
         (dict-like means method keys() and __getitem__())
+        data_keys:
+        data need to be concated
+        label_keys:
+        label data (won't be concated)
         '''
         # case1 string
         if isinstance(data_source, str):
@@ -294,12 +298,18 @@ class data_obj(basic_data_obj):
             keys = set(self._data_obj_list[0].keys())
             for obj in self._data_obj_list:
                 keys = keys & set(obj.keys())
-            if len(select_keys)>0:
-                keys = keys & set(select_keys)
+            all_valid_keys = set(data_keys) | set(label_keys)
+            if len(all_valid_keys)>0:
+                keys = keys & all_valid_keys
             # 拼接数据
+            # 数据拼接逻辑：
+            # 1. 检查所有key对应的
             data = {}
             for key in keys:
-                data[key] = np.concatenate([i[key] for i in self._data_obj_list], axis=0)
+                if key in label_keys:
+                    data[key] = self._data_obj_list[0][key]
+                else:
+                    data[key] = np.concatenate([i[key] for i in self._data_obj_list], axis=concat_axis)
             # 初始化
             super(data_obj, self).__init__(data)
         # case3 dict-like

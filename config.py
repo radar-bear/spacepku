@@ -37,6 +37,7 @@ def get_default_layout():
                     showline=True,
                     showgrid=True,
                     zeroline=False,
+                    nticks=10,
                     mirror='all'),
         yaxis=YAxis(autorange=True,
                     showline=True,

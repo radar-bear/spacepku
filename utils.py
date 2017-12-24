@@ -98,7 +98,7 @@ def save_html(data, file_name):
 
     if file_name.split('.')[-1] != 'html':
         file_name += '.html'
-    offline.plot(data, filename='file_name')
+    offline.plot(data, filename=file_name)
 
 # set figure params
 def set_params(fig, params, trace_name=None):
