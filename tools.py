@@ -1,5 +1,5 @@
 import pandas as pd
-from pandas.core.tools.datetimes import parse_time_string
+from pandas.tseries.tools import parse_time_string
 
 layout_keys = ['title', 'showlegend', 'width', 'height']
 yaxis_keys = ['ytitle', 'yrange', 'ytype', 'yticktext', 'ytickvals']

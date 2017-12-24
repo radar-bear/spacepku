@@ -81,7 +81,7 @@ def tplot_heatmap(time,
         value = np.log10(value)
     if dist_normalize:
         value = pd.DataFrame(value)
-        value = value.apply(lambda x: (x - np.min(x)) / (np.max(x) - np.min(x)))
+        value = value.apply(lambda x: (x - np.nanmin(x)) / (np.nanmax(x) - np.nanmin(x)))
 
     time = pd.to_datetime(pd.Series(time)) # 为了正确地显示时间需要用pd.Series
     return plot_heatmap(time,
