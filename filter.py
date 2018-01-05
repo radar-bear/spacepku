@@ -70,7 +70,10 @@ def resample2d(x, y, value, xscale=1, yscale=1, kind='slinear', xnew=[], ynew=[]
     valuenew = f(xnew, ynew)
     return valuenew
     
-    
+def polyfit(x, y, xnew, degree=3):
+    z = np.polyfit(x, y, degree)
+    f = np.poly1d(z)
+    return f(xnew)
     
     
 

@@ -51,6 +51,13 @@ def load_fig(file_name):
         v = json.loads(f.read())
     return go.Figure(data=v['data'], layout=v['layout'])
 
+# load plotly animation fig
+def load_animation(file_name):
+    """Render a plotly figure from a json file"""
+    with open(file_name, 'r') as f:
+        v = json.loads(f.read())
+    return go.Figure(data=v['data'], layout=v['layout'], frames=v['frames'])
+
 # save data
 # default save pickle
 def save(data, file_name):
@@ -84,6 +91,29 @@ def save_fig(data, file_name):
     relayout = json.loads(json.dumps(data.layout, cls=PlotlyJSONEncoder))
 
     fig_json=json.dumps({'data': redata,'layout': relayout})
+    with open(file_name, 'w') as f:
+        f.write(fig_json)
+        
+# save figs
+def save_animation(data, file_name):
+    """
+    copied from https://github.com/plotly/plotly.py/issues/579
+
+    Serialize a plotly figure object to JSON so it can be persisted to disk.
+    Figure's persisted as JSON can be rebuilt using the plotly JSON chart API:
+
+    http://help.plot.ly/json-chart-schema/
+
+    If `file_name` is provided, JSON is written to file.
+
+    Modified from https://github.com/nteract/nteract/issues/1229
+    """
+
+    redata = json.loads(json.dumps(data.data, cls=PlotlyJSONEncoder))
+    relayout = json.loads(json.dumps(data.layout, cls=PlotlyJSONEncoder))
+    reframes = json.loads(json.dumps(data.frames, cls=PlotlyJSONEncoder))
+
+    fig_json=json.dumps({'data': redata,'layout': relayout,'frames':reframes})
     with open(file_name, 'w') as f:
         f.write(fig_json)
 
