@@ -11,7 +11,7 @@
 
     # 安装brew
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    #使用brew安装gcc
+    # 使用brew安装gcc
     brew install gcc
 
 对于Linux用户，需要用apt-get安装gcc

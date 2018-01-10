@@ -34,7 +34,7 @@
   
     <link rel="top" title="spacepku 0.1 文档" href="index.html"/>
         <link rel="next" title="读取数据" href="Load_data.html"/>
-        <link rel="prev" title="Welcome to spacepku’s documentation!" href="index.html"/> 
+        <link rel="prev" title="安装" href="Installation.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -88,6 +88,7 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">安装</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">快速入门</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">画出磁场的变化</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">画出某能量电子的投掷角分布变化</a></li>
@@ -96,8 +97,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Load_data.html">读取数据</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Fast_plot.html">便捷画图</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Params.html">参数设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plot.html">绘图</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Params.html">绘图参数列表</a></li>
 </ul>
 
             
@@ -168,8 +169,8 @@
 <div class="section" id="id2">
 <h2>画出磁场的变化<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <p>导师给了笨笨一个cdf文件，要求他把里面的磁场数据读出并画出线图。</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">spacepku</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="n">Data</span> <span class="o">=</span> <span class="n">cdf_obj</span><span class="p">(</span><span class="s1">&#39;mentor_data.cdf&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacepku</span> <span class="kn">as</span> <span class="nn">sp</span>
+<span class="n">Data</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">data_obj</span><span class="p">(</span><span class="s1">&#39;mentor_data.cdf&#39;</span><span class="p">)</span>
 <span class="n">fig_B</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">tplot</span><span class="p">(</span><span class="s1">&#39;B_Calc&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -178,11 +179,11 @@
 </div>
 <p>只需要三行就把图画完了诶，Amazing！我们仔细看看这三行都做了什么吧！</p>
 <p>第一步将spacepku导入</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">spacepku</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacepku</span> <span class="kn">as</span> <span class="nn">sp</span>
 </pre></div>
 </div>
 <p>第二步读取导师给笨笨的cdf文件</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Data</span> <span class="o">=</span> <span class="n">cdf_obj</span><span class="p">(</span><span class="s1">&#39;mentor_data.cdf&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Data</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">data_obj</span><span class="p">(</span><span class="s1">&#39;mentor_data.cdf&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>第三步指定画出Data中名字为B_Calc的变量，这里tplot的含义是 <em>time series plot</em>
@@ -216,7 +217,7 @@
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">time</span> <span class="o">=</span> <span class="n">Data</span><span class="p">[</span><span class="s1">&#39;Epoch&#39;</span><span class="p">]</span>
 <span class="n">pa</span> <span class="o">=</span> <span class="n">Data</span><span class="p">[</span><span class="s1">&#39;FEDU_Alpha&#39;</span><span class="p">]</span>
 <span class="n">fedu</span> <span class="o">=</span> <span class="n">Data</span><span class="p">[</span><span class="s1">&#39;FEDU&#39;</span><span class="p">][:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="c1">#取出第1个能段的FEDU</span>
-<span class="n">fig_fedu</span> <span class="o">=</span> <span class="n">tplot_heatmap_obj</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">pa</span><span class="p">,</span> <span class="n">fedu</span><span class="p">)</span><span class="o">.</span><span class="n">tplot</span><span class="p">()</span>
+<span class="n">fig_fedu</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">plot_heatmap</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">pa</span><span class="p">,</span> <span class="n">fedu</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="figure align-center">
@@ -266,7 +267,7 @@
         <a href="Load_data.html" class="btn btn-neutral float-right" title="读取数据" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Welcome to spacepku’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="Installation.html" class="btn btn-neutral" title="安装" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
