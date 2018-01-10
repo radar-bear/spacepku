@@ -10,8 +10,8 @@
 
 .. code-block:: python
 
-    from spacepku import *
-    Data = cdf_obj('mentor_data.cdf')
+    import spacepku as sp
+    Data = sp.data_obj('mentor_data.cdf')
     fig_B = Data.tplot('B_Calc')
 
 .. figure:: ./figs/quick_start_fig1.png
@@ -23,13 +23,13 @@
 
 .. code-block:: python
 
-    from spacepku import *
+    import spacepku as sp
 
 第二步读取导师给笨笨的cdf文件
 
 .. code-block:: python
 
-    Data = cdf_obj('mentor_data.cdf')
+    Data = sp.data_obj('mentor_data.cdf')
 
 第三步指定画出Data中名字为B_Calc的变量，这里tplot的含义是 *time series plot*
 （fig_B是这张图的句柄）
@@ -78,7 +78,7 @@ cdf data object generated from:
     time = Data['Epoch']
     pa = Data['FEDU_Alpha']
     fedu = Data['FEDU'][:, :, 0] #取出第1个能段的FEDU
-    fig_fedu = tplot_heatmap_obj(time, pa, fedu).tplot()
+    fig_fedu = sp.plot_heatmap(time, pa, fedu)
 
 .. figure:: ./figs/quick_start_fig2.png
    :align: center
