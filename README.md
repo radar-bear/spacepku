@@ -14,9 +14,9 @@ spacepku是一款用于空间物理研究领域的python开源库
     # 使用brew安装gcc
     brew install gcc
 
-对于Linux用户，使用apt-get安装gcc
+对于Linux用户，使用apt-get安装一系列依赖
 
-    sudo apt-get install gcc
+    sudo apt-get install gcc gfortran g++
 
 ### 安装spacepku
 
