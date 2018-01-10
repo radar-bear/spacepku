@@ -2,7 +2,7 @@ import os
 import sys
 from subprocess import call
 
-platform = sys.paltform
+# platform = sys.platform
 
 pip_package_list = ['numpy', 'pandas', 'h5py', 'spacepy', 'plotly']
 
@@ -10,7 +10,7 @@ package_dir = os.path.join(os.path.dirname(os.__file__),
                            'site-packages', 'spacepku')
 print(package_dir)
 
-call(['pip', 'install'] + pip_package_list)
+call(['pip install -r requirements.txt', shell=True)
 
 if not os.path.exists(package_dir):
     os.mkdir(package_dir)
