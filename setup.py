@@ -10,7 +10,7 @@ package_dir = os.path.join(os.path.dirname(os.__file__),
                            'site-packages', 'spacepku')
 print(package_dir)
 
-call(['pip install -r requirements.txt', shell=True)
+call('pip install -r requirements.txt', shell=True)
 
 if not os.path.exists(package_dir):
     os.mkdir(package_dir)
