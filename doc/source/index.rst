@@ -14,6 +14,7 @@ spacepku是一款用于空间物理研究领域的python开源库，致力于使
 .. toctree::
    :maxdepth: 2
 
+   Installation
    Quick_start
    Load_data
    Plot
