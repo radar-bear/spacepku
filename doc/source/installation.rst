@@ -14,11 +14,11 @@
     # 使用brew安装gcc
     brew install gcc
 
-对于Linux用户，需要用apt-get安装gcc
+对于Linux用户，需要用apt-get安装一系列依赖
 
 .. code-block:: shell
 
-    sudo apt-get install gcc
+    sudo apt-get install gcc gfortran g++
 
 对于Mac和Linux用户，完成上述准备工作后执行下面的命令。最后显示Enjoy!即安装成功，我们可以开始后面的教程了！
 

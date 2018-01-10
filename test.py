@@ -1,3 +1,3 @@
 import spacepku as sp
 
-print('Enjoy!')
+print('Successfully installed spacepku! Enjoy!')
