@@ -6,3 +6,5 @@ rbsp_demo/
 mms_demo/
 doc/build/
 private/
+src/rbsptool
+src/rbspscript

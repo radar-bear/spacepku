@@ -1,7 +1,10 @@
 # spacepku
 spacepku是一款用于空间物理研究领域的python开源库
+
 ## 安装
+
 ### 准备工作
+
 如果你的电脑已经装有gcc编译器可以跳过此节。
 对于Mac用户，使用brew安装gcc。打开终端，执行下面的命令：
 
@@ -15,6 +18,7 @@ spacepku是一款用于空间物理研究领域的python开源库
     sudo apt-get install gcc
 
 ###安装spacepku
+
 打开终端，执行下面的命令（这可能会花费几分钟）：
 
     git clone https://github.com/radar-bear/spacepku.git
