@@ -17,6 +17,6 @@ else:
 
 call(['cp -r ./src/* ' + package_dir], shell=True)
 
-call(['cd pysatCDF && python setup.py install'], shell=True)
+call(['git clone https://github.com/rstoneback/pysatCDF.git && cd pysatCDF && python setup.py install'], shell=True)
 
 call(['python', 'test.py'])
