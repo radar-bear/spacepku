@@ -3,7 +3,7 @@
 
 读取cdf数据
 --------------------
-spacepku提供了一个类data_obj来处理各种格式的数据输入，这一数据类型类似于字典，通过键值对的方式存储数据。
+spacepku提供了一个类data_obj来处理各种格式的数据输入，包括[cdf, h5, csv, txt]。这一数据类型类似于字典，通过键值对的方式存储数据。
 
 .. code-block:: python
 
@@ -11,7 +11,13 @@ spacepku提供了一个类data_obj来处理各种格式的数据输入，这一�
     Data = sp.data_obj('your_file.cdf')
     print(Data)
 
-得到输出
+也可以输入一系列文件名，这些文件不需要属于同种类型，data_obj会自动按键值进行数据拼合。
+
+.. code-block:: python
+
+    Data = sp.data_obj(['file1', 'file2', 'file3'])
+
+打印变量Data，得到输出
 
 ：：
     0 Epoch (7825,)
@@ -71,7 +77,7 @@ cdf_obj的tplot方法可以绘制某变量的时间序列，同样有键值和�
 
 .. code-block:: python
 
-    # 指定画线图，第二个维度被视作不同的线
+    # 指定画线图，第二个维度被视作不同线的索引
     Data.tplot('Position', type='line')
     # 指定画谱图，同时必须指定y轴数据
     Data.tplot('FESA', y=Data['FEDU_Energy'][0,:], type='heatmap')
@@ -81,12 +87,12 @@ cdf_obj的tplot方法可以绘制某变量的时间序列，同样有键值和�
 其余参数：
 
  - params: 字典。设置画图参数。参数列表见参数设置。
- - clog: 布尔值。画谱图时是否对变量取对数。
+ - log: 布尔值。画谱图时是否对变量取对数。
  - showfig: 布尔值。是否显示图片。
 
 保留画图参数
 >>>>>>>>>>>>>>>>>
-cdf_obj内部保存着绘制每个变量所使用的画图参数字典，便捷画图会默认使用cdf_obj内部保存的画图参数字典。有两种方式可以修改这一字典：
+cdf_obj内部保存着绘制每个变量所使用的画图参数字典，便捷画图会默认使用data_obj内部保存的画图参数字典。有两种方式可以修改这一字典：
 
 .. code-block:: python
 
