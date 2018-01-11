@@ -262,7 +262,7 @@ numpy.distutils.core.setup(
     author='Russell Stoneback',
     author_email='rstoneba@utdallas.edu',
     #data_files = [('', ['cdf36_1-dist/CDF_copyright.txt'])],
-
+    
     # Choose your license
     license='BSD',
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -278,7 +278,7 @@ numpy.distutils.core.setup(
         'Topic :: Scientific/Engineering :: Astronomy',
         'Topic :: Scientific/Engineering :: Physics',
         'Topic :: Scientific/Engineering :: Atmospheric Science',
-
+        
         # Pick your license as you wish (should match "license" above)
         'License :: OSI Approved :: BSD License',
 
