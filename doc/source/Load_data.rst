@@ -3,20 +3,17 @@
 
 读取cdf数据
 --------------------
-spacepku提供了一个类cdf_obj来处理cdf数据输入
+spacepku提供了一个类data_obj来处理各种格式的数据输入，这一数据类型类似于字典，通过键值对的方式存储数据。
 
 .. code-block:: python
 
-    from spacepku import *
-    Data = cdf_obj('your_file.cdf')
+    import spacepku as sp
+    Data = sp.data_obj('your_file.cdf')
     print(Data)
 
 得到输出
+
 ：：
-
-    cdf data object generated from:
-    /data/mentor_data.cdf
-
     0 Epoch (7825,)
 
     1 FEDU_Alpha (11,)
@@ -35,11 +32,11 @@ spacepku提供了一个类cdf_obj来处理cdf数据输入
 
     8 Position (7825, 3)
 
-输出中包括两部分内容，第一行显示了这个cdf_obj对象读取自哪个文件。接下来的若干行显示了这个cdf_obj对象包含的变量。
+输出列出了data_obj中包含的各个键值和其对应数据的形状。
 
 获取变量
 >>>>>>>>>>>>
-取出变量有两种索引方式，键值或序号。以取出时间变量为例：
+取出变量有两种索引方式，键值或序号。以取出时间变量为例，下面两种写法都能正确地获得数据：
 
 .. code-block:: python
 

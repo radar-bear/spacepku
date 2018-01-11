@@ -11,8 +11,11 @@ print(package_dir)
 
 if not os.path.exists(package_dir):
     os.mkdir(package_dir)
+else:
+    call(['rm -r ' + package_dir], shell=True)
+    os.mkdir(package_dir)
 
-call(['cp', '-r', './src/*', package_dir])
+call(['cp -r ./src/* ' + package_dir], shell=True)
 
 call(['cd pysatCDF && python setup.py install'], shell=True)
 

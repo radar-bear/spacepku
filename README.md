@@ -1,5 +1,5 @@
 # spacepku
-spacepku是一款用于空间物理研究领域的python开源库
+spacepku致力于使空间物理研究中的数据可视化变得简单有趣。
 
 ## 安装
 
@@ -20,13 +20,15 @@ spacepku是一款用于空间物理研究领域的python开源库
 
 ### 安装spacepku
 
+我们推荐大家安装[Anaconda3](https://www.anaconda.com/download/)，这样会省去很多麻烦。
+
 打开终端，执行下面的命令（这可能会花费几分钟）：
 
     git clone https://github.com/radar-bear/spacepku.git
     cd spacepku
     sudo python setup.py
 
-最后显示“Enjoy!”即安装成功！
+最后显示“Successfully installed spacepku! Enjoy!”即安装成功！
 
 ## 开发与维护
 北京大学空间科学与技术中心

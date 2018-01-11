@@ -8,12 +8,17 @@ import pickle
 import json
 
 from spacepy.pycdf import CDF
+from h5py import File as h5file
 from plotly.utils import PlotlyJSONEncoder
 from plotly import offline
 import plotly.graph_objs as go
 import plotly.plotly as py
 from .config import *
 from .tools import *
+
+# extension check
+def check_extension(file_name, extension):
+    return file_name.split('.')[-1] == extension
 
 # load data
 # default load pickle
@@ -23,11 +28,13 @@ def load(file_name):
 # load txt file
 # \n for newlines and data splited by spaces
 def load_txt(file_name, col_names=None):
+    check_extension(file_name, 'txt')
     f = open(file_name)
     return pd.DataFrame([i.split() for i in f.readlines()], columns=col_names)
 
 # load csv
 def load_csv(file_name):
+    check_extension(file_name, 'csv')
     return pd.read_csv(file_name)
 
 # load pickle
@@ -36,7 +43,13 @@ def load_pickle(file_name):
 
 # load cdf
 def load_cdf(file_name):
+    check_extension(file_name, 'cdf')
     return CDF(file_name)
+
+# load h5
+def load_h5(file_name):
+    check_extension(file_name, 'h5')
+    return h5file(file_name)
 
 # load dict from string
 def load_dict(file_name):

@@ -134,12 +134,29 @@ class basic_data_obj(basic_obj):
             return fig
 
 
+class ascii_obj(basic_data_obj):
+
+    def __init__(self, file_path):
+        file_extension = file_path.split('.')[-1]
+        loader_map = {'csv':load_csv,
+                      'txt':load_txt}
+        super(ascii_obj, self).__init__(loader_map[file_extension](file_path))
+        self._origin_file_name = file_path
+
+
+class h5_obj(basic_data_obj):
+
+    def __init__(self, file_path):
+        super(h5_obj, self).__init__(load_h5(file_path))
+
+    def convert_raw_data(self, key):
+        return np.array(self._data[key])
+
+
 class cdf_obj(basic_data_obj):
 
     def __init__(self, file_path):
         # load basic data and info
-        if file_path.split('.')[-1] != 'cdf':
-            raise ValueError('{} is not a cdf file'.format(cdf_file_path))
         super(cdf_obj, self).__init__(load_cdf(file_path))
         # set attrs and plot params
         self._origin_file_name = file_path
@@ -204,6 +221,9 @@ class data_obj(basic_data_obj):
             # data_source is a list of file
             file_type_map = {
                 'cdf':cdf_obj,
+                'h5':h5_obj,
+                'txt':ascii_obj,
+                'csv':ascii_obj,
             }
             self._data_obj_list = []
             for file_name in data_source:

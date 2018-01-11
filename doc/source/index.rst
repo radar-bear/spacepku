@@ -9,12 +9,12 @@
 欢迎使用spacepku!
 ====================================
 
-spacepku是一款用于空间物理研究领域的python开源库，致力于使空间物理研究中的数据处理变得优雅！简单！有趣！
+spacepku是一款用于空间物理研究领域的python开源库，致力于使空间物理研究中的数据可视化变得简单有趣。
 
 .. toctree::
    :maxdepth: 2
 
-   Installation
+   Install
    Quick_start
    Load_data
    Plot
