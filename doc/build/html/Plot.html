@@ -1,0 +1,297 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>绘图 &mdash; spacepku 0.1 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="spacepku 0.1 文档" href="index.html"/>
+        <link rel="next" title="绘图参数列表" href="Params.html"/>
+        <link rel="prev" title="读取数据" href="Load_data.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> spacepku
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Install.html">安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Quick_start.html">快速入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Load_data.html">读取数据</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">绘图</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">线图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">谱图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">时间序列图</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#id5">修改图像</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Params.html">绘图参数列表</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">spacepku</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>绘图</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/Plot.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>绘图<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2>线图<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>绘制线图需要传入 <strong>时间序列</strong> 及 <strong>二维数组</strong> ，二维数组的第一个维度会被解释为不同的线。例如传入尺寸为(3, 50)的数组，将会得到3条由50个点组成的线。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacepku</span> <span class="kn">as</span> <span class="nn">sp</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+<span class="n">value1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">value2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">fig_lines</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">plot_lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">],</span> <span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;multi_lines&#39;</span><span class="p">})</span>
+<span class="c1"># 如果只想画一条线，也要将数据包装成二维</span>
+<span class="c1"># 注意下面语句中的中括号</span>
+<span class="n">fig_singleline</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">plot_lines</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="p">[</span><span class="n">value1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>谱图<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>绘制谱图需要传入 <strong>时间序列</strong> ， <strong>y轴序列</strong> 及 <strong>二维数组</strong> 。可以选择传入一组绘图参数。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">([</span><span class="mi">50</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">fig_heatmap</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">plot_heatmap</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;test_heatmap&#39;</span><span class="p">,</span> <span class="s1">&#39;ytitle&#39;</span><span class="p">:</span><span class="s1">&#39;placeholder&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>时间序列图<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>当横轴为时间时，传入参数**timeseries=True**。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="n">time</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s1">&#39;2017-6-20&#39;</span><span class="p">,</span><span class="s1">&#39;2017-8-20&#39;</span><span class="p">)</span>
+<span class="n">value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">))</span>
+<span class="n">fig_timeseries</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">plot_lines</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="p">[</span><span class="n">value</span><span class="p">],</span> <span class="n">timeseries</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h1>修改图像<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h1>
+<p>前文中的plot返回的变量fig是图像句柄，我们可以通过它来修改图像。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">set_params</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;ytitle&#39;</span><span class="p">:</span><span class="s1">&#39;B(nT)&#39;</span><span class="p">,</span> <span class="s1">&#39;xtitle&#39;</span><span class="p">:</span><span class="s1">&#39;time&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>使用show函数查看fig(推荐使用jupyter notebook环境)</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">show</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>fig默认以基于网页浏览器的 <a class="reference external" href="mag.pku-space.cn/Data/library/spacepku/doc/source/figs/spacepku_demo.html">可交互模式</a>  展现。我们可以把fig保存为网页，也可以保存为png格式图片。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">save_png</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s1">&#39;figure_name.png&#39;</span><span class="p">)</span>
+<span class="n">save_html</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s1">&#39;figure_name.html&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>句柄中包含了图像所使用的参数和原始数据，可以使用以下函数保存和读取完整的图像句柄。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">save_fig</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s1">&#39;figure_name.source&#39;</span><span class="p">)</span>
+<span class="n">fig_reload</span> <span class="o">=</span> <span class="n">load_fig</span><span class="p">(</span><span class="s1">&#39;figure_name.source&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Params.html" class="btn btn-neutral float-right" title="绘图参数列表" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Load_data.html" class="btn btn-neutral" title="读取数据" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; 版权所有 2017, leimingda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/translations.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

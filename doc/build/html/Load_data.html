@@ -88,6 +88,7 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Install.html">安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Quick_start.html">快速入门</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">读取数据</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#cdf">读取cdf数据</a><ul>
@@ -101,7 +102,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Plot.html">绘图</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Params.html">参数设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plot.html#id5">修改图像</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Params.html">绘图参数列表</a></li>
 </ul>
 
             
@@ -169,18 +171,20 @@
 <h1>读取数据<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
 <div class="section" id="cdf">
 <h2>读取cdf数据<a class="headerlink" href="#cdf" title="永久链接至标题">¶</a></h2>
-<p>spacepku提供了一个类cdf_obj来处理cdf数据输入</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">spacepku</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="n">Data</span> <span class="o">=</span> <span class="n">cdf_obj</span><span class="p">(</span><span class="s1">&#39;your_file.cdf&#39;</span><span class="p">)</span>
+<p>spacepku提供了一个类data_obj来处理各种格式的数据输入，包括[cdf, h5, csv, txt]。这一数据类型类似于字典，通过键值对的方式存储数据。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacepku</span> <span class="kn">as</span> <span class="nn">sp</span>
+<span class="n">Data</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">data_obj</span><span class="p">(</span><span class="s1">&#39;your_file.cdf&#39;</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">Data</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>得到输出
-：：</p>
-<blockquote>
-<div><p>cdf data object generated from:
-/data/mentor_data.cdf</p>
-<p>0 Epoch (7825,)</p>
+<p>也可以输入一系列文件名，这些文件不需要属于同种类型，data_obj会自动按键值进行数据拼合。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Data</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">data_obj</span><span class="p">([</span><span class="s1">&#39;file1&#39;</span><span class="p">,</span> <span class="s1">&#39;file2&#39;</span><span class="p">,</span> <span class="s1">&#39;file3&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>打印变量Data，得到输出</p>
+<dl class="docutils">
+<dt>：：</dt>
+<dd><p class="first">0 Epoch (7825,)</p>
 <p>1 FEDU_Alpha (11,)</p>
 <p>2 FEDU_Energy (7825, 25)</p>
 <p>3 FEDU (7825, 11, 25)</p>
@@ -188,12 +192,13 @@
 <p>5 L (7825,)</p>
 <p>6 B_Calc (7825,)</p>
 <p>7 MLT (7825,)</p>
-<p>8 Position (7825, 3)</p>
-</div></blockquote>
-<p>输出中包括两部分内容，第一行显示了这个cdf_obj对象读取自哪个文件。接下来的若干行显示了这个cdf_obj对象包含的变量。</p>
+<p class="last">8 Position (7825, 3)</p>
+</dd>
+</dl>
+<p>输出列出了data_obj中包含的各个键值和其对应数据的形状。</p>
 <div class="section" id="id2">
 <h3>获取变量<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
-<p>取出变量有两种索引方式，键值或序号。以取出时间变量为例：</p>
+<p>取出变量有两种索引方式，键值或序号。以取出时间变量为例，下面两种写法都能正确地获得数据：</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Data</span><span class="p">[</span><span class="s1">&#39;Epoch&#39;</span><span class="p">]</span>
 <span class="n">Data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
@@ -218,7 +223,7 @@
 </pre></div>
 </div>
 <p>对于二维变量可选线图或谱图：</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># 指定画线图，第二个维度被视作不同的线</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># 指定画线图，第二个维度被视作不同线的索引</span>
 <span class="n">Data</span><span class="o">.</span><span class="n">tplot</span><span class="p">(</span><span class="s1">&#39;Position&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
 <span class="c1"># 指定画谱图，同时必须指定y轴数据</span>
 <span class="n">Data</span><span class="o">.</span><span class="n">tplot</span><span class="p">(</span><span class="s1">&#39;FESA&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">Data</span><span class="p">[</span><span class="s1">&#39;FEDU_Energy&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">,:],</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;heatmap&#39;</span><span class="p">)</span>
@@ -229,14 +234,14 @@
 <blockquote>
 <div><ul class="simple">
 <li>params: 字典。设置画图参数。参数列表见参数设置。</li>
-<li>clog: 布尔值。画谱图时是否对变量取对数。</li>
+<li>log: 布尔值。画谱图时是否对变量取对数。</li>
 <li>showfig: 布尔值。是否显示图片。</li>
 </ul>
 </div></blockquote>
 </div>
 <div class="section" id="id5">
 <h3>保留画图参数<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
-<p>cdf_obj内部保存着绘制每个变量所使用的画图参数字典，便捷画图会默认使用cdf_obj内部保存的画图参数字典。有两种方式可以修改这一字典：</p>
+<p>cdf_obj内部保存着绘制每个变量所使用的画图参数字典，便捷画图会默认使用data_obj内部保存的画图参数字典。有两种方式可以修改这一字典：</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Data</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="n">var_name</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
 <span class="n">Data</span><span class="o">.</span><span class="n">tplot</span><span class="p">(</span><span class="n">var_name</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
 </pre></div>

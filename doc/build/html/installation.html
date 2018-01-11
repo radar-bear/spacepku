@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>搜索 &mdash; spacepku 0.1 文档</title>
+  <title>安装 &mdash; spacepku 0.1 文档</title>
   
 
   
@@ -32,7 +32,9 @@
   
 
   
-    <link rel="top" title="spacepku 0.1 文档" href="index.html"/> 
+    <link rel="top" title="spacepku 0.1 文档" href="index.html"/>
+        <link rel="next" title="快速入门" href="Quick_start.html"/>
+        <link rel="prev" title="欢迎使用spacepku!" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -68,7 +70,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -85,12 +87,11 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="Install.html">安装</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Quick_start.html">快速入门</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Load_data.html">读取数据</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Plot.html">绘图</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Plot.html#id5">修改图像</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Params.html">绘图参数列表</a></li>
 </ul>
 
@@ -136,10 +137,14 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li></li>
+      <li>安装</li>
     
     
       <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/Installation.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
     
@@ -151,19 +156,29 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  <div class="section" id="id1">
+<h1>安装<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>目前自动安装只支持Mac和Linux用户，Windows用户的安装说明还在路上。</p>
+<p>请打开终端，进行以下操作</p>
+<p>对于Mac用户，需要用brew安装gcc</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1"># 安装brew</span>
+/usr/bin/ruby -e <span class="s2">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span class="k">)</span><span class="s2">&quot;</span>
+<span class="c1">#使用brew安装gcc</span>
+brew install gcc
+</pre></div>
+</div>
+<p>对于Linux用户，需要用apt-get安装gcc</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>sudo apt-get install gcc
+</pre></div>
+</div>
+<p>对于Mac和Linux用户，完成上述准备工作后执行下面的命令。最后显示Enjoy!即安装成功，我们可以开始后面的教程了！</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>git clone https://github.com/radar-bear/spacepku.git
+<span class="nb">cd</span> spacepku
+sudo python setup.py
+</pre></div>
+</div>
+</div>
 
-  
-  <div id="search-results">
-  
-  </div>
 
            </div>
            <div class="articleComments">
@@ -171,6 +186,15 @@
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Quick_start.html" class="btn btn-neutral float-right" title="快速入门" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="欢迎使用spacepku!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -210,7 +234,6 @@
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
       <script type="text/javascript" src="_static/translations.js"></script>
-      <script type="text/javascript" src="_static/searchtools.js"></script>
 
   
 
@@ -226,14 +249,7 @@
           SphinxRtdTheme.StickyNav.enable();
       });
   </script>
-  
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
    
-
 
 </body>
 </html>

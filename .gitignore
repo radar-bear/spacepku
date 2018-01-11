@@ -5,7 +5,6 @@ __pycache__/
 data/
 rbsp_demo/
 mms_demo/
-doc/build/
 private/
 pysatCDF/
 src/rbsptool
