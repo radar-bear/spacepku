@@ -13,7 +13,7 @@ data_obj 提供了数据整合功能(以所有文件key交集为准，在axis0�
 
 import numpy as np
 import pandas as pd
-import plot
+import .plot as plot
 from .utils import *
 from .tools import *
 
