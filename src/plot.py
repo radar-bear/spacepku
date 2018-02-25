@@ -10,7 +10,6 @@ from .tools import parse_params_to_plotly
 ###########################
 # plot tools
 def parse_default_plot_type(value_dim):
-
     """
     Usage
     ----------
@@ -33,19 +32,16 @@ def parse_default_plot_type(value_dim):
     This function is private
     """
 
-    if value_dim >= 3:
-        raise IndexError('{} has shape {}, beyond tplot ability'.format(key, target_shape))
-    elif value_dim == 2:
-        type = 'heatmap' # 二维数据默认画heatmap
+    if value_dim == 2:
+        type = 'heatmap'  # 二维数据默认画heatmap
     elif value_dim == 1:
-        type = 'line' # 一维数据默认画line
-    elif value_dim <= 0:
+        type = 'line'  # 一维数据默认画line
+    else:
         raise ValueError('wrong dimension {}'.format(value_dim))
     return type
 
 
 def stdtime(data):
-
     """
     Usage
     ----------
@@ -62,7 +58,6 @@ def plot_lines(x, value_list,
                timeseries=False,
                params={}, mode='lines',
                showfig=True):
-
     """
     Usage
     ----------
@@ -101,7 +96,7 @@ def plot_lines(x, value_list,
     """
 
     value_list = np.array(value_list)
-    assert len(value_list.shape)==2
+    assert len(value_list.shape) == 2
 
     if timeseries:
         x = stdtime(x)
@@ -122,14 +117,14 @@ def plot_lines(x, value_list,
 
     # set params
     if params:
-        if isinstance(trace_params, dict):
+        if isinstance(params, dict):
             params = parse_params_to_plotly(params)
             layout_params = params['layout_params']
             for trace in trace_list:
                 trace.update(params['trace_params'])
-        elif isinstance(trace_params, list):
+        elif isinstance(params, list):
             layout_params = parse_params_to_plotly(params[0])['layout_params']
-            for param, trace in zip(trace_params, trace_list):
+            for param, trace in zip(params, trace_list):
                 trace.update(parse_params_to_plotly(param)['trace_params'])
         else:
             raise ValueError('plot params neither list nor dict')
@@ -149,7 +144,6 @@ def plot_heatmap(x, y, value,
                  timeseries=False,
                  dist_normalize=False,
                  showfig=True):
-
     """
     Usage
     ----------
@@ -201,7 +195,8 @@ def plot_heatmap(x, y, value,
         value = np.log10(value)
     if dist_normalize:
         value = pd.DataFrame(value)
-        value = value.apply(lambda x: (x - np.nanmin(x)) / (np.nanmax(x) - np.nanmin(x)))
+        value = value.apply(lambda x: (x - np.nanmin(x)) /
+                            (np.nanmax(x) - np.nanmin(x)))
 
     color_min = np.nanpercentile(value, 5)
     color_max = np.nanpercentile(value, 95)
@@ -221,7 +216,7 @@ def plot_heatmap(x, y, value,
     # set layout
     layout = get_default_layout()
     layout.update(params['layout_params'])
-    fig = go.Figure(data=[trace],layout=layout)
+    fig = go.Figure(data=[trace], layout=layout)
     if showfig:
         iplot(fig)
     return fig
@@ -230,7 +225,6 @@ def plot_heatmap(x, y, value,
 ###########################
 # advanced plot function
 def stack_traces(fig_list, params={}, showfig=False):
-
     """
     Usage
     ----------
@@ -252,7 +246,7 @@ def stack_traces(fig_list, params={}, showfig=False):
 
     # use the layout params of 1st fig defaultly
     # avoid to overwrite origin figs
-    if len(fig_list)==0:
+    if len(fig_list) == 0:
         raise ValueError('fig list is empty')
     from copy import deepcopy
     fig_list = deepcopy(fig_list)
@@ -278,21 +272,23 @@ def stack_figs(fig_list, params={}, showfig=False):
     # return a single fig with multi-yaxis
     # get the pixel height of each panel
     height_list = np.array([fig.layout.height for fig in fig_list])
+
     def get_stack_layout(height_list, fig_gap, marginb=DEFAULT_MARGIN, margint=DEFAULT_MARGIN):
         # Because the height of a single fig inculde the margin
         # This function stripe the margin and keep the true height of the figure in a stack fig
         # get the real height of each fig
-        real_height_list = height_list-(marginb+margint)
+        real_height_list = height_list - (marginb + margint)
         # the total height of the whole stack fig
-        total_height = np.sum(real_height_list)+(len(height_list)-1)*fig_gap+(marginb+margint)
+        total_height = np.sum(real_height_list) + \
+            (len(height_list) - 1) * fig_gap + (marginb + margint)
         # calculate the fraction position of each panel
-        height_fractions = real_height_list/total_height
-        gap_fraction = fig_gap/total_height
+        height_fractions = real_height_list / total_height
+        gap_fraction = fig_gap / total_height
         domain_list = []
-        pos_begin = marginb/total_height
+        pos_begin = marginb / total_height
         for fig_height in height_fractions:
-            domain_list.append([pos_begin, pos_begin+fig_height])
-            pos_begin += fig_height+gap_fraction
+            domain_list.append([pos_begin, pos_begin + fig_height])
+            pos_begin += fig_height + gap_fraction
         # total_height is the absolute pixels of stack fig
         # domain_list is the fraction position of each panel
         return total_height, domain_list
@@ -300,24 +296,24 @@ def stack_figs(fig_list, params={}, showfig=False):
     data_list = []
     layout = go.Layout()
     # aggregrate the traces
-    for i,fig in enumerate(fig_list):
+    for i, fig in enumerate(fig_list):
         domain = domain_list[i]
         # set position of each trace
         for trace in fig.data:
-            trace.update(yaxis='y'+str(i+1))
+            trace.update(yaxis='y' + str(i + 1))
             # set colorbar position
             if 'colorbar' in trace:
-                trace.colorbar.update(dict(lenmode='fraction',len=np.abs(domain[1]-domain[0]),
+                trace.colorbar.update(dict(lenmode='fraction', len=np.abs(domain[1] - domain[0]),
                                            y=np.mean(domain)))
             data_list.append(trace)
         # keep the yaxis parameters of each panel and set the yaxis position
         fig.layout.yaxis.update(domain=domain)
-        layout.update({'yaxis'+str(i+1):fig.layout.yaxis.copy()})
+        layout.update({'yaxis' + str(i + 1): fig.layout.yaxis.copy()})
     layout.update(xaxis=fig_list[-1].layout.xaxis)
-    layout.xaxis.update({'rangeslider':{'visible':False}})
-    layout.update({'height':total_height, 'width':DEFAULT_WIDTH})
+    layout.xaxis.update({'rangeslider': {'visible': False}})
+    layout.update({'height': total_height, 'width': DEFAULT_WIDTH})
     layout.update(parse_params_to_plotly(params)['layout_params'])
-    fig = go.Figure(data=data_list,layout=layout)
+    fig = go.Figure(data=data_list, layout=layout)
     if showfig:
         iplot(fig)
     return fig

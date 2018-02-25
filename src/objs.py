@@ -13,7 +13,7 @@ data_obj 提供了数据整合功能(以所有文件key交集为准，在axis0�
 
 import numpy as np
 import pandas as pd
-from .plot import *
+import plot
 from .utils import *
 from .tools import *
 
@@ -41,9 +41,10 @@ class basic_data_obj(basic_obj):
     只保存参数可以写一个方法，也可以提供一个访问画图参数的接口，让用户自己去存取。
     这一部分需要确定用户需求。
     '''
+
     def __init__(self, data):
         self._data = data
-        self._keys = sorted(list(data.keys())) # 统一按照字母顺序排列键值
+        self._keys = sorted(list(data.keys()))  # 统一按照字母顺序排列键值
         self._shapes = [np.shape(self._data[key]) for key in self._keys]
         self._plot_params = {}
         for key in self._keys:
@@ -90,14 +91,15 @@ class basic_data_obj(basic_obj):
     def tplot(self, key, y=[], time=[], params={}, type='Default', log=False, showfig=True):
         key = self.parse_key(key)
         # check time data
-        if len(time)==0:
+        if len(time) == 0:
             for time_key in DEFAULT_TIME_KEY:
                 if time_key in self._data.keys():
                     time = self[time_key]
                     break
             # 如果不含有任何default time key则需要用户指定time数据
-            if len(time)==0:
-                raise ValueError('please specify time data when plot {}'.format(key))
+            if len(time) == 0:
+                raise ValueError(
+                    'please specify time data when plot {}'.format(key))
         # prepare data
         value = self[key]
         value_dim = len(value.shape)
@@ -107,30 +109,30 @@ class basic_data_obj(basic_obj):
         # 自动适应数据维度画图
         # 如果画图类型是Default则自动判断类型
         if type == 'Default':
-            type = parse_default_plot_type(value_dim)
+            type = plot.parse_default_plot_type(value_dim)
         # 指定类型为line后如果是1维数据画单线图
         # 如果是2维数据画多线图
         if type == 'line':
             if value_dim == 1:
-                fig = plot_lines(time, [value],
-                                 timeseries=True,
-                                 params=self._plot_params[key],
-                                 showfig=showfig)
+                fig = plot.plot_lines(time, [value],
+                                      timeseries=True,
+                                      params=self._plot_params[key],
+                                      showfig=showfig)
                 return fig
             if value_dim == 2:
-                fig = plot_lines(time, value,
-                                 timeseries=True,
-                                 params=self._plot_params[key],
-                                 showfig=showfig)
+                fig = plot.plot_lines(time, value,
+                                      timeseries=True,
+                                      params=self._plot_params[key],
+                                      showfig=showfig)
                 return fig
         # 指定类型为heatmap画谱图
         if type == 'heatmap':
             if len(y) == 0:
                 raise ValueError('y data missed when plot {}'.format(key))
-            fig = plot_heatmap(time, y, value, log=log,
-                               timeseries=True,
-                               params=self._plot_params[key],
-                               showfig=showfig)
+            fig = plot.plot_heatmap(time, y, value, log=log,
+                                    timeseries=True,
+                                    params=self._plot_params[key],
+                                    showfig=showfig)
             return fig
 
 
@@ -138,8 +140,8 @@ class ascii_obj(basic_data_obj):
 
     def __init__(self, file_path):
         file_extension = file_path.split('.')[-1]
-        loader_map = {'csv':load_csv,
-                      'txt':load_txt}
+        loader_map = {'csv': load_csv,
+                      'txt': load_txt}
         super(ascii_obj, self).__init__(loader_map[file_extension](file_path))
         self._origin_file_name = file_path
 
@@ -160,11 +162,13 @@ class cdf_obj(basic_data_obj):
         super(cdf_obj, self).__init__(load_cdf(file_path))
         # set attrs and plot params
         self._origin_file_name = file_path
-        self._attrs = {key:dict(self._data[key].attrs) for key in self._keys}
-        self._attrs.update({i:self._attrs[self._keys[i]] for i in range(len(self._keys))})
+        self._attrs = {key: dict(self._data[key].attrs) for key in self._keys}
+        self._attrs.update({i: self._attrs[self._keys[i]]
+                            for i in range(len(self._keys))})
 
     def __repr__(self):
-        extra_info = "cdf data object generated from: \n {}\n".format(self._origin_file_name)
+        extra_info = "cdf data object generated from: \n {}\n".format(
+            self._origin_file_name)
         return super(cdf_obj, self).__repr__(extra_info)
     __str__ = __repr__
 
@@ -176,7 +180,7 @@ class cdf_obj(basic_data_obj):
         for fillval_key in fillval_key_list:
             if fillval_key in raw_cdf_data.attrs:
                 fillval = raw_cdf_data.attrs[fillval_key]
-                data[data==fillval] = np.nan
+                data[data == fillval] = np.nan
                 break
         return data
 
@@ -220,10 +224,10 @@ class data_obj(basic_data_obj):
         elif isinstance(data_source, list):
             # data_source is a list of file
             file_type_map = {
-                'cdf':cdf_obj,
-                'h5':h5_obj,
-                'txt':ascii_obj,
-                'csv':ascii_obj,
+                'cdf': cdf_obj,
+                'h5': h5_obj,
+                'txt': ascii_obj,
+                'csv': ascii_obj,
             }
             self._data_obj_list = []
             for file_name in data_source:
@@ -234,7 +238,7 @@ class data_obj(basic_data_obj):
             for obj in self._data_obj_list:
                 keys = keys & set(obj.keys())
             all_valid_keys = set(data_keys) | set(label_keys)
-            if len(all_valid_keys)>0:
+            if len(all_valid_keys) > 0:
                 keys = keys & all_valid_keys
             # 拼接数据
             # 数据拼接逻辑：
@@ -244,7 +248,8 @@ class data_obj(basic_data_obj):
                 if key in label_keys:
                     data[key] = self._data_obj_list[0][key]
                 else:
-                    data[key] = np.concatenate([i[key] for i in self._data_obj_list], axis=concat_axis)
+                    data[key] = np.concatenate(
+                        [i[key] for i in self._data_obj_list], axis=concat_axis)
             # 初始化
             super(data_obj, self).__init__(data)
         # case3 dict-like
