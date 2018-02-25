@@ -4,6 +4,10 @@ import numpy as np
 import pandas as pd
 import os
 
+##################################
+# version information
+
+VERSION = '0.0.1'
 
 ##################################
 # default key config
@@ -23,7 +27,7 @@ def pku_mag_init(jupyter=True):
     if jupyter:
         from plotly.offline import init_notebook_mode
         init_notebook_mode()
-    
+
 
 ##################################
 # plot config
@@ -31,6 +35,8 @@ def pku_mag_init(jupyter=True):
 DEFAULT_MARGIN = 60
 DEFAULT_WIDTH = 900
 DEFAULT_HEIGHT = 350
+
+
 def get_default_layout():
     default_layout = Layout(
         xaxis=XAxis(rangeslider=dict(visible=False),
@@ -53,12 +59,13 @@ def get_default_layout():
     )
     return default_layout
 
+
 def get_default_colorbar():
     default_colorbar = ColorBar(
         thicknessmode='fraction',
         thickness=0.015,
-        #lenmode='pixels',
-        #len=DEFAULT_HEIGHT-2*DEFAULT_MARGIN,
+        # lenmode='pixels',
+        # len=DEFAULT_HEIGHT-2*DEFAULT_MARGIN,
         titleside='right'
     )
     return default_colorbar
