@@ -116,6 +116,7 @@ def plot_lines(x, value_list,
             trace['name'] = value_name
 
     # set params
+    layout_params = {}
     if params:
         if isinstance(params, dict):
             params = parse_params_to_plotly(params)
