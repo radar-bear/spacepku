@@ -13,7 +13,7 @@ data_obj 提供了数据整合功能(以所有文件key交集为准，在axis0�
 
 import numpy as np
 import pandas as pd
-import .plot as plot
+from .plot import *
 from .utils import *
 from .tools import *
 
@@ -109,30 +109,30 @@ class basic_data_obj(basic_obj):
         # 自动适应数据维度画图
         # 如果画图类型是Default则自动判断类型
         if type == 'Default':
-            type = plot.parse_default_plot_type(value_dim)
+            type = parse_default_plot_type(value_dim)
         # 指定类型为line后如果是1维数据画单线图
         # 如果是2维数据画多线图
         if type == 'line':
             if value_dim == 1:
-                fig = plot.plot_lines(time, [value],
-                                      timeseries=True,
-                                      params=self._plot_params[key],
-                                      showfig=showfig)
+                fig = plot_lines(time, [value],
+                                 timeseries=True,
+                                 params=self._plot_params[key],
+                                 showfig=showfig)
                 return fig
             if value_dim == 2:
-                fig = plot.plot_lines(time, value,
-                                      timeseries=True,
-                                      params=self._plot_params[key],
-                                      showfig=showfig)
+                fig = plot_lines(time, value,
+                                 timeseries=True,
+                                 params=self._plot_params[key],
+                                 showfig=showfig)
                 return fig
         # 指定类型为heatmap画谱图
         if type == 'heatmap':
             if len(y) == 0:
                 raise ValueError('y data missed when plot {}'.format(key))
-            fig = plot.plot_heatmap(time, y, value, log=log,
-                                    timeseries=True,
-                                    params=self._plot_params[key],
-                                    showfig=showfig)
+            fig = plot_heatmap(time, y, value, log=log,
+                               timeseries=True,
+                               params=self._plot_params[key],
+                               showfig=showfig)
             return fig
 
 
