@@ -1,5 +1,6 @@
 # spacepku
 spacepku致力于使空间物理研究中的数据可视化变得简单有趣。
+当前版本为V0.0.1
 
 ## 安装
 
@@ -29,6 +30,16 @@ spacepku致力于使空间物理研究中的数据可视化变得简单有趣。
     sudo python setup.py
 
 最后显示“Successfully installed spacepku! Enjoy!”即安装成功！
+
+### 升级spacepku
+
+spacepku当前版本为 **0.0.1**
+
+如果之前已经安装过较低版本的spacepku，执行下面的命令可升级至最高版本
+
+    git clone https://github.com/radar-bear/spacepku.git
+    cd spacepku
+    sudo python upgrade.py
 
 ## 开发与维护
 北京大学空间科学与技术中心
