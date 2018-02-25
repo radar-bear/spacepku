@@ -120,7 +120,7 @@ class basic_data_obj(basic_obj):
                                  showfig=showfig)
                 return fig
             if value_dim == 2:
-                fig = plot_lines(time, value,
+                fig = plot_lines(time, value.T,
                                  timeseries=True,
                                  params=self._plot_params[key],
                                  showfig=showfig)
