@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import spacepy as sp
+import spacepku as sp
 import os
 
 OMNI_PATH = '/data/omni'
