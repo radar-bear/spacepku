@@ -5,7 +5,7 @@ import plotly.graph_objs as go
 from plotly.offline import iplot
 from .config import *
 from .tools import parse_params_to_plotly
-from .filter import resample2d
+from .filter import resample2d_ts
 
 
 ###########################
@@ -192,7 +192,7 @@ def plot_heatmap(x, y, value,
     # downsample if data_length exceed x
     if data_length > 0:
         ratio = data_length / len(x)
-        x, y, value = resample2d(x, y, value, xscale=ratio)
+        x, y, value = resample2d_ts(x, y, value, xscale=ratio)
 
         # the 1st axis of value is x
         # the 2nd axis of value is y

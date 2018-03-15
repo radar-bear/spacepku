@@ -72,6 +72,21 @@ def resample2d(x, y, value, xscale=1, yscale=1, kind='linear', xnew=[], ynew=[])
     return xnew, ynew, valuenew
 
 
+def resample2d_ts(x, y, value, xscale=1, yscale=1, kind='linear', xnew=[], ynew=[]):
+    xnew = np.array(xnew)
+    ynew = np.array(ynew)
+    if len(xnew) == 0:
+        xnew = np.linspace(np.nanmin(x).timestamp(), np.nanmax(
+            x).timestamp(), int(len(x) * xscale))
+    if len(ynew) == 0:
+        ynew = np.linspace(np.nanmin(y), np.nanmax(x), int(len(x) * yscale))
+    functs = np.vectorize(lambda x: x.timestamp())
+    funcParseTs = np.vectorize(lambda x: pd.to_datetime(x, unit: 's'))
+    f = interp2d(functs(x), y, value, kind=kind)
+    valuenew = f(xnew, ynew)
+    return funcParseTs(xnew), ynew, valuenew
+
+
 def polyfit(x, y, xnew, degree=3):
     z = np.polyfit(x, y, degree)
     f = np.poly1d(z)
