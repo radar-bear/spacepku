@@ -189,16 +189,14 @@ def plot_heatmap(x, y, value,
 
     params = parse_params_to_plotly(params)
 
+    # the 1st axis of value is x
+    # the 2nd axis of value is y
+
+    value = np.array(value).T
     # downsample if data_length exceed x
     if data_length > 0:
         ratio = data_length / len(x)
         x, y, value = resample2d_ts(x, y, value, xscale=ratio)
-
-        # the 1st axis of value is x
-        # the 2nd axis of value is y
-
-    value = np.array(value).T
-
     if log:
         value = np.log10(value)
     if dist_normalize:
