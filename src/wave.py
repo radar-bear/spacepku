@@ -51,6 +51,6 @@ def wave_polar_and_angle(BBmatrix, background):
                 np.sum(k * background[i]) / (la.norm(k) * la.norm(background[i]))) * 180 / np.pi
             polar[i, j] = sigma[sort_index[0]] / sigma[sort_index[1]]
             if angle[i, j] > 90:
-                ploar[i, j] *= -1
+                polar[i, j] *= -1
 
     return polar, angle
