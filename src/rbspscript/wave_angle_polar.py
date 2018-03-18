@@ -6,10 +6,11 @@ import os
 import re
 
 
-def get_wave_info(date):
+def get_wave_info(date, twin='a'):
 
-    data = sp.data_obj(rbsp.parse_rbsp_wave_matrix_dir(date))
-    background = sp.data_obj(rbsp.parse_rbsp_wave_background_dir(date))
+    data = sp.data_obj(rbsp.parse_rbsp_wave_matrix_dir(date, twin=twin))
+    background = sp.data_obj(
+        rbsp.parse_rbsp_wave_background_dir(date, twin=twin))
     lenb = len(background['Epoch'])
     lend = len(data['Epoch'])
     mag = background['Mag'][:]

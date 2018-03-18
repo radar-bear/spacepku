@@ -11,6 +11,8 @@ RBSP_PATH = '/data/ECT/rbsp-ect.lanl.gov/data_pub/'
 RBSP_B_COMPONENT_PATH = '/data/EMFISIS/emfisis.physics.uiowa.edu/Flight/'
 RBSP_WAVE_BACKGROUND_PATH = '/data/EMFISIS/emfisis.physics.uiowa.edu/Flight/'
 RBSP_WAVE_MATRIX_PATH = '/data/EMFISIS/emfisis.physics.uiowa.edu/Flight/'
+PROTON_PATH = "/mmsMirror/rbspicea.ftecs.com/Level_3/TOFxEH/"
+
 
 ##################################
 # parse dir
@@ -165,6 +167,28 @@ def parse_rbsp_wave_matrix_dir(date, parrent_dir=RBSP_WAVE_MATRIX_PATH, twin='a'
             all_file_list = os.listdir(file_dir)
             for temp_file_name in all_file_list:
                 if re.match('^' + file_name + '.', temp_file_name):
+                    dir_list.append(os.path.join(file_dir, temp_file_name))
+                    break
+        date += time_offset
+    return dir_list
+
+
+def parse_proton_dir(date, parrent_dir=PROTON_PATH):
+    if isinstance(date, str):
+        date = (date, date)
+    begin = pd.to_datetime(date[0]).date()
+    end = pd.to_datetime(date[1]).date()
+    date = begin
+    time_offset = pd.Timedelta(days=1)
+    dir_list = []
+    while date <= end:
+        time_dir = date.strftime('%Y')
+        time_file_name = date.strftime('%Y%m%d')
+        file_dir = os.path.join(parrent_dir, time_dir)
+        if os.path.exists(file_dir):
+            all_file_list = os.listdir(file_dir)
+            for temp_file_name in all_file_list:
+                if re.match('^' + 'rbsp-a-rbspice_lev-3_TOFxEH_' + time_file_name + '.', temp_file_name):
                     dir_list.append(os.path.join(file_dir, temp_file_name))
                     break
         date += time_offset
