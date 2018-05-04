@@ -66,13 +66,13 @@ def resample2d(x, y, value, xscale=1, yscale=1, kind='linear', xnew=[], ynew=[])
     if len(xnew) == 0:
         if xscale == 1:
             xnew = x
-        else
+        else:
             xnew = np.linspace(np.nanmin(x), np.nanmax(x),
                                int(len(x) * xscale))
     if len(ynew) == 0:
         if yscale == 1:
             ynew = y
-        else
+        else:
             ynew = np.linspace(np.nanmin(y), np.nanmax(y),
                                int(len(y) * yscale))
     f = interp2d(x, y, value, kind=kind)
@@ -89,7 +89,7 @@ def resample2d_ts(x, y, value, xscale=1, yscale=1, kind='linear', xnew=[], ynew=
     if len(ynew) == 0:
         if yscale == 1:
             ynew = y
-        else
+        else:
             ynew = np.linspace(np.nanmin(y), np.nanmax(y),
                                int(len(y) * yscale))
     functs = np.vectorize(lambda x: x.timestamp())
