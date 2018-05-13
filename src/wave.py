@@ -24,7 +24,7 @@ def wave_fft(data, time, window):
 def wave_polar_and_angle(BBmatrix, background):
     '''
     BBmatrix is a complex np.array with shape (time * frequency * 3 * 3)
-    the 3*3 submatrix is 
+    the 3*3 submatrix is
     Bx*Bx Bx*By Bx*Bz
     By*Bx By*By By*Bz
     Bz*Bx Bz*By Bz*Bz
@@ -49,7 +49,7 @@ def wave_polar_and_angle(BBmatrix, background):
             k = VT[sort_index[-1], :]
             angle[i, j] = np.arccos(
                 np.sum(k * background[i]) / (la.norm(k) * la.norm(background[i]))) * 180 / np.pi
-            polar[i, j] = sigma[sort_index[0]] / sigma[sort_index[1]]
+            polar[i, j] = sigma[sort_index[1]] / sigma[sort_index[2]]
             if angle[i, j] > 90:
                 polar[i, j] *= -1
 
